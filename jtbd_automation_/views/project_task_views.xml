@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Task Form View Extension -->
+    <record id="view_task_form_jtbd" model="ir.ui.view">
+        <field name="name">project.task.form.jtbd</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2" />
+        <field name="arch" type="xml">
+            <field name="description" position="after">
+                <notebook>
+                    <page string="JTBD Context" name="jtbd_context">
+                        <group>
+                            <group>
+                                <field name="x_task_type" />
+                                <field name="x_task_phase" />
+                                <field name="x_estimated_hours" />
+                            </group>
+                            <group>
+                                <field name="x_jtbd_context" widget="html" />
+                            </group>
+                        </group>
+                        <group string="Deliverables">
+                            <field name="x_deliverables" widget="html" />
+                        </group>
+                        <group string="Definition of Done">
+                            <field name="x_definition_of_done" widget="html" />
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </field>
+    </record>
+</odoo>

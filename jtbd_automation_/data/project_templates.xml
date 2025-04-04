@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Agency Growth Template -->
+    <record id="project_template_agency_growth" model="project.project">
+        <field name="name">Agency Growth Project Template</field>
+        <field name="user_id" ref="base.user_admin" />
+        <field name="x_job_category">Agency Growth</field>
+        <field name="is_template" eval="True" />
+        <field name="description">Template for Agency Growth projects</field>
+    </record>
+
+    <!-- Project Stages for Agency Growth -->
+    <record id="project_stage_agency_growth_discovery" model="project.task.type">
+        <field name="name">Discovery</field>
+        <field name="sequence">1</field>
+        <field name="project_ids" eval="[(4, ref('project_template_agency_growth'))]" />
+    </record>
+
+    <record id="project_stage_agency_growth_implementation" model="project.task.type">
+        <field name="name">Implementation</field>
+        <field name="sequence">2</field>
+        <field name="project_ids" eval="[(4, ref('project_template_agency_growth'))]" />
+    </record>
+
+    <record id="project_stage_agency_growth_training" model="project.task.type">
+        <field name="name">Training</field>
+        <field name="sequence">3</field>
+        <field name="project_ids" eval="[(4, ref('project_template_agency_growth'))]" />
+    </record>
+
+    <record id="project_stage_agency_growth_verification" model="project.task.type">
+        <field name="name">Verification</field>
+        <field name="sequence">4</field>
+        <field name="project_ids" eval="[(4, ref('project_template_agency_growth'))]" />
+    </record>
+
+    <!-- Reporting Automation Template -->
+    <record id="project_template_reporting_automation" model="project.project">
+        <field name="name">Reporting Automation Project Template</field>
+        <field name="user_id" ref="base.user_admin" />
+        <field name="x_job_category">Reporting Automation</field>
+        <field name="is_template" eval="True" />
+        <field name="description">Template for Reporting Automation projects</field>
+    </record>
+
+    <!-- Project Stages for Reporting Automation -->
+    <record id="project_stage_reporting_discovery" model="project.task.type">
+        <field name="name">Discovery</field>
+        <field name="sequence">1</field>
+        <field name="project_ids" eval="[(4, ref('project_template_reporting_automation'))]" />
+    </record>
+
+    <record id="project_stage_reporting_configuration" model="project.task.type">
+        <field name="name">Configuration</field>
+        <field name="sequence">2</field>
+        <field name="project_ids" eval="[(4, ref('project_template_reporting_automation'))]" />
+    </record>
+
+    <record id="project_stage_reporting_training" model="project.task.type">
+        <field name="name">Training</field>
+        <field name="sequence">3</field>
+        <field name="project_ids" eval="[(4, ref('project_template_reporting_automation'))]" />
+    </record>
+
+    <record id="project_stage_reporting_optimization" model="project.task.type">
+        <field name="name">Optimization</field>
+        <field name="sequence">4</field>
+        <field name="project_ids" eval="[(4, ref('project_template_reporting_automation'))]" />
+    </record>
+
+    <!-- Campaign Scaling Template -->
+    <record id="project_template_campaign_scaling" model="project.project">
+        <field name="name">Campaign Scaling Project Template</field>
+        <field name="user_id" ref="base.user_admin" />
+        <field name="x_job_category">Campaign Scaling</field>
+        <field name="is_template" eval="True" />
+        <field name="description">Template for Campaign Scaling projects</field>
+    </record>
+
+    <!-- Project Stages for Campaign Scaling -->
+    <record id="project_stage_campaign_discovery" model="project.task.type">
+        <field name="name">Discovery</field>
+        <field name="sequence">1</field>
+        <field name="project_ids" eval="[(4, ref('project_template_campaign_scaling'))]" />
+    </record>
+
+    <record id="project_stage_campaign_implementation" model="project.task.type">
+        <field name="name">Implementation</field>
+        <field name="sequence">2</field>
+        <field name="project_ids" eval="[(4, ref('project_template_campaign_scaling'))]" />
+    </record>
+
+    <record id="project_stage_campaign_training" model="project.task.type">
+        <field name="name">Training</field>
+        <field name="sequence">3</field>
+        <field name="project_ids" eval="[(4, ref('project_template_campaign_scaling'))]" />
+    </record>
+
+    <record id="project_stage_campaign_optimization" model="project.task.type">
+        <field name="name">Optimization</field>
+        <field name="sequence">4</field>
+        <field name="project_ids" eval="[(4, ref('project_template_campaign_scaling'))]" />
+    </record>
+
+    <!-- Margin Improvement Template -->
+    <record id="project_template_margin_improvement" model="project.project">
+        <field name="name">Margin Improvement Project Template</field>
+        <field name="user_id" ref="base.user_admin" />
+        <field name="x_job_category">Margin Improvement</field>
+        <field name="is_template" eval="True" />
+        <field name="description">Template for Margin Improvement projects</field>
+    </record>
+
+    <!-- Project Stages for Margin Improvement -->
+    <record id="project_stage_margin_discovery" model="project.task.type">
+        <field name="name">Discovery</field>
+        <field name="sequence">1</field>
+        <field name="project_ids" eval="[(4, ref('project_template_margin_improvement'))]" />
+    </record>
+
+    <record id="project_stage_margin_analysis" model="project.task.type">
+        <field name="name">Analysis</field>
+        <field name="sequence">2</field>
+        <field name="project_ids" eval="[(4, ref('project_template_margin_improvement'))]" />
+    </record>
+
+    <record id="project_stage_margin_implementation" model="project.task.type">
+        <field name="name">Implementation</field>
+        <field name="sequence">3</field>
+        <field name="project_ids" eval="[(4, ref('project_template_margin_improvement'))]" />
+    </record>
+
+    <record id="project_stage_margin_verification" model="project.task.type">
+        <field name="name">Verification</field>
+        <field name="sequence">4</field>
+        <field name="project_ids" eval="[(4, ref('project_template_margin_improvement'))]" />
+    </record>
+
+    <!-- Client Retention Template -->
+    <record id="project_template_client_retention" model="project.project">
+        <field name="name">Client Retention Project Template</field>
+        <field name="user_id" ref="base.user_admin" />
+        <field name="x_job_category">Client Retention</field>
+        <field name="is_template" eval="True" />
+        <field name="description">Template for Client Retention projects</field>
+    </record>
+
+    <!-- Project Stages for Client Retention -->
+    <record id="project_stage_retention_discovery" model="project.task.type">
+        <field name="name">Discovery</field>
+        <field name="sequence">1</field>
+        <field name="project_ids" eval="[(4, ref('project_template_client_retention'))]" />
+    </record>
+
+    <record id="project_stage_retention_strategy" model="project.task.type">
+        <field name="name">Strategy</field>
+        <field name="sequence">2</field>
+        <field name="project_ids" eval="[(4, ref('project_template_client_retention'))]" />
+    </record>
+
+    <record id="project_stage_retention_implementation" model="project.task.type">
+        <field name="name">Implementation</field>
+        <field name="sequence">3</field>
+        <field name="project_ids" eval="[(4, ref('project_template_client_retention'))]" />
+    </record>
+
+    <record id="project_stage_retention_review" model="project.task.type">
+        <field name="name">Review</field>
+        <field name="sequence">4</field>
+        <field name="project_ids" eval="[(4, ref('project_template_client_retention'))]" />
+    </record>
+</odoo>

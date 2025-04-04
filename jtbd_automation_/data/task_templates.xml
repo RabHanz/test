@@ -1,0 +1,1502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- =================== -->
+    <!-- AGENCY GROWTH TASKS -->
+    <!-- =================== -->
+
+    <record id="task_template_agency_growth_assessment" model="project.task">
+        <field name="name">Business Growth Assessment</field>
+        <field name="project_id" ref="project_template_agency_growth" />
+        <field name="stage_id" ref="project_stage_agency_growth_discovery" />
+        <field name="planned_hours">24</field>
+        <field name="description">Evaluate current offerings and identify scalable service
+            opportunities</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">24</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Need to grow agency revenue through new service offerings</li>
+<li>Target Outcome: New profitable service lines that increase agency capacity</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Current service portfolio assessment</li>
+<li>Market opportunity analysis</li>
+<li>Skills and resource gap analysis</li>
+<li>Profit potential analysis for new services</li>
+<li>Prioritized opportunities report</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>Complete assessment of current services</li>
+<li>At least 3 viable new service opportunities identified</li>
+<li>Resource requirements documented for each opportunity</li>
+<li>Client agreement on priority focus areas</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_agency_growth_strategy" model="project.task">
+        <field name="name">Growth Strategy Development</field>
+        <field name="project_id" ref="project_template_agency_growth" />
+        <field name="stage_id" ref="project_stage_agency_growth_discovery" />
+        <field name="planned_hours">32</field>
+        <field name="description">Develop comprehensive strategy for new service offerings</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">32</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Lack of strategic direction for growth initiatives</li>
+<li>Target Outcome: Clear roadmap for implementing new service offerings</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Growth strategy document</li>
+<li>Service offering specifications</li>
+<li>Implementation roadmap</li>
+<li>Resource allocation plan</li>
+<li>Financial projections</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>Strategy document approved by client</li>
+<li>Implementation roadmap with clear milestones</li>
+<li>Financial projections validated</li>
+<li>Team alignment on growth direction</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_agency_growth_implementation" model="project.task">
+        <field name="name">Service Offering Implementation</field>
+        <field name="project_id" ref="project_template_agency_growth" />
+        <field name="stage_id" ref="project_stage_agency_growth_implementation" />
+        <field name="planned_hours">48</field>
+        <field name="description">Configure and implement new service delivery processes</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">48</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Lack of processes and systems for new service offerings</li>
+<li>Target Outcome: Operational new service delivery model</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Service delivery processes documentation</li>
+<li>Operations manual for new services</li>
+<li>Workflow implementation</li>
+<li>Quality control standards</li>
+<li>Client onboarding process for new services</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>New service processes fully documented</li>
+<li>Delivery workflows implemented and tested</li>
+<li>Quality standards established</li>
+<li>Team ready to deliver new services</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_agency_growth_resource" model="project.task">
+        <field name="name">Resource Allocation Planning</field>
+        <field name="project_id" ref="project_template_agency_growth" />
+        <field name="stage_id" ref="project_stage_agency_growth_implementation" />
+        <field name="planned_hours">32</field>
+        <field name="description">Develop resource planning for new service offerings</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">32</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Unclear resource allocation for new growth initiatives</li>
+<li>Target Outcome: Efficient resource utilization supporting growth</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Resource allocation matrix</li>
+<li>Skill development plan</li>
+<li>Hiring roadmap (if needed)</li>
+<li>Team structure documentation</li>
+<li>Capacity planning calculator</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>Clear resource allocation for new services</li>
+<li>Timeline for team development/hiring</li>
+<li>Capacity model validated against growth targets</li>
+<li>Management approval of resource plan</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_agency_growth_training" model="project.task">
+        <field name="name">Team Training Program</field>
+        <field name="project_id" ref="project_template_agency_growth" />
+        <field name="stage_id" ref="project_stage_agency_growth_training" />
+        <field name="planned_hours">40</field>
+        <field name="description">Train team on delivering new service offerings</field>
+        <field name="x_task_type">Training</field>
+        <field name="x_task_phase">Training</field>
+        <field name="x_estimated_hours">40</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Skills gap for delivering new services</li>
+<li>Target Outcome: Competent team ready to deliver new offerings</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Training curriculum</li>
+<li>Training materials and guides</li>
+<li>Training sessions</li>
+<li>Competency assessment framework</li>
+<li>Ongoing learning resources</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>All team members trained on new services</li>
+<li>Competency assessments completed</li>
+<li>Training materials documented for future use</li>
+<li>Support systems in place for continuous learning</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_agency_growth_onboarding" model="project.task">
+        <field name="name">Client Onboarding Implementation</field>
+        <field name="project_id" ref="project_template_agency_growth" />
+        <field name="stage_id" ref="project_stage_agency_growth_implementation" />
+        <field name="planned_hours">24</field>
+        <field name="description">Develop standardized onboarding for new service clients</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">24</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Inconsistent client onboarding for new services</li>
+<li>Target Outcome: Standardized, efficient client onboarding process</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Client onboarding workflow</li>
+<li>Intake forms and questionnaires</li>
+<li>Welcome materials and documentation</li>
+<li>Client education materials</li>
+<li>Service level agreements</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>Documented onboarding process for new services</li>
+<li>All intake materials created and approved</li>
+<li>Client education materials ready</li>
+<li>Onboarding process tested and refined</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_agency_growth_dashboard" model="project.task">
+        <field name="name">Performance Dashboard Setup</field>
+        <field name="project_id" ref="project_template_agency_growth" />
+        <field name="stage_id" ref="project_stage_agency_growth_implementation" />
+        <field name="planned_hours">16</field>
+        <field name="description">Configure metrics tracking for new service performance</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Lack of performance tracking for new services</li>
+<li>Target Outcome: Real-time visibility into service performance</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>KPI definition document</li>
+<li>Performance dashboard design</li>
+<li>Data source integration</li>
+<li>Automated reporting setup</li>
+<li>Alert and notification configuration</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>Dashboard configured and displaying live data</li>
+<li>All relevant KPIs tracked</li>
+<li>Reports automated and scheduled</li>
+<li>Team trained on dashboard usage</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_agency_growth_review" model="project.task">
+        <field name="name">Review and Optimization</field>
+        <field name="project_id" ref="project_template_agency_growth" />
+        <field name="stage_id" ref="project_stage_agency_growth_verification" />
+        <field name="planned_hours">12</field>
+        <field name="description">Review initial implementation and make refinements</field>
+        <field name="x_task_type">Review</field>
+        <field name="x_task_phase">Verification</field>
+        <field name="x_estimated_hours">12</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Initial implementation may need refinements</li>
+<li>Target Outcome: Optimized service delivery model</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Implementation review report</li>
+<li>Performance analysis</li>
+<li>Optimization recommendations</li>
+<li>Refined process documentation</li>
+<li>Future growth roadmap</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>Implementation thoroughly reviewed</li>
+<li>Process refinements identified and implemented</li>
+<li>Performance exceeding baseline metrics</li>
+<li>Future growth opportunities documented</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <!-- ========================== -->
+    <!-- REPORTING AUTOMATION TASKS -->
+    <!-- ========================== -->
+
+    <record id="task_template_reporting_needs_assessment" model="project.task">
+        <field name="name">Reporting Needs Assessment</field>
+        <field name="project_id" ref="project_template_reporting_automation" />
+        <field name="stage_id" ref="project_stage_reporting_discovery" />
+        <field name="planned_hours">8</field>
+        <field name="description">Document current reporting processes and requirements</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">8</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Time-consuming manual reporting processes</li>
+<li>Target Outcome: Clear understanding of reporting needs for automation</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Current reporting inventory</li>
+<li>Process flow documentation</li>
+<li>Pain point analysis</li>
+<li>Requirements specification</li>
+<li>Automation opportunities report</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>Complete documentation of all reporting needs</li>
+<li>Clear identification of automation opportunities</li>
+<li>Requirements approved by client</li>
+<li>Priority reporting areas identified</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_reporting_data_mapping" model="project.task">
+        <field name="name">Data Source Mapping</field>
+        <field name="project_id" ref="project_template_reporting_automation" />
+        <field name="stage_id" ref="project_stage_reporting_discovery" />
+        <field name="planned_hours">8</field>
+        <field name="description">Identify and map all data sources for integration</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">8</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Siloed data sources requiring manual aggregation</li>
+<li>Target Outcome: Comprehensive data map for automated integration</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Data source inventory</li>
+<li>Data schema documentation</li>
+<li>API/integration capability assessment</li>
+<li>Data refresh frequency analysis</li>
+<li>Data quality assessment</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>All data sources identified and documented</li>
+<li>Integration methods determined for each source</li>
+<li>Data refresh requirements documented</li>
+<li>Potential data quality issues identified</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_reporting_architecture" model="project.task">
+        <field name="name">Reporting Architecture Design</field>
+        <field name="project_id" ref="project_template_reporting_automation" />
+        <field name="stage_id" ref="project_stage_reporting_discovery" />
+        <field name="planned_hours">8</field>
+        <field name="description">Design data architecture for automated reporting</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">8</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Lack of centralized data architecture for reporting</li>
+<li>Target Outcome: Efficient data flow design for automated reporting</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Data architecture diagram</li>
+<li>ETL process design</li>
+<li>Automation workflow specification</li>
+<li>Technology selection recommendations</li>
+<li>Performance considerations document</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>Architecture design completed and approved</li>
+<li>Technology solutions selected</li>
+<li>Automation workflows defined</li>
+<li>Performance considerations addressed</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_reporting_data_integration" model="project.task">
+        <field name="name">Data Source Integration</field>
+        <field name="project_id" ref="project_template_reporting_automation" />
+        <field name="stage_id" ref="project_stage_reporting_configuration" />
+        <field name="planned_hours">16</field>
+        <field name="description">Connect and configure data source integrations</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Manual data collection from multiple sources</li>
+<li>Target Outcome: Automated data aggregation from all sources</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>API connections</li>
+<li>Data transformation scripts</li>
+<li>ETL process implementation</li>
+<li>Automated data refresh setup</li>
+<li>Data validation checks</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>All data sources successfully connected</li>
+<li>Data flowing automatically into central repository</li>
+<li>Transformations working correctly</li>
+<li>Refresh schedules implemented and tested</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_reporting_templates" model="project.task">
+        <field name="name">Report Template Creation</field>
+        <field name="project_id" ref="project_template_reporting_automation" />
+        <field name="stage_id" ref="project_stage_reporting_configuration" />
+        <field name="planned_hours">8</field>
+        <field name="description">Design and build automated report templates</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">8</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Manual report creation and formatting</li>
+<li>Target Outcome: Standardized, automated report templates</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Report design specifications</li>
+<li>Reusable report templates</li>
+<li>Branded design elements</li>
+<li>Interactive report features</li>
+<li>Distribution format options</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>All required report templates created</li>
+<li>Templates approved by client</li>
+<li>Templates successfully pulling live data</li>
+<li>Export options configured</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_reporting_dashboard" model="project.task">
+        <field name="name">Dashboard Implementation</field>
+        <field name="project_id" ref="project_template_reporting_automation" />
+        <field name="stage_id" ref="project_stage_reporting_configuration" />
+        <field name="planned_hours">8</field>
+        <field name="description">Configure real-time performance dashboards</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">8</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Lack of real-time visibility into performance</li>
+<li>Target Outcome: Interactive dashboards for immediate insights</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Dashboard design specifications</li>
+<li>Dashboard implementation</li>
+<li>Interactive filter configuration</li>
+<li>User access setup</li>
+<li>Mobile view configuration</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>All dashboards created and displaying live data</li>
+<li>Interactive features functioning correctly</li>
+<li>User permissions configured appropriately</li>
+<li>Mobile access tested and working</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_reporting_training" model="project.task">
+        <field name="name">Team Training Session</field>
+        <field name="project_id" ref="project_template_reporting_automation" />
+        <field name="stage_id" ref="project_stage_reporting_training" />
+        <field name="planned_hours">4</field>
+        <field name="description">Train team on using the new reporting system</field>
+        <field name="x_task_type">Training</field>
+        <field name="x_task_phase">Training</field>
+        <field name="x_estimated_hours">4</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Team unfamiliar with new reporting system</li>
+<li>Target Outcome: Self-sufficient team able to utilize reporting system</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Training materials</li>
+<li>Hands-on training sessions</li>
+<li>User guide documentation</li>
+<li>Video tutorials</li>
+<li>FAQ document</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>All team members trained on system</li>
+<li>Users able to create and modify reports</li>
+<li>Documentation completed and accessible</li>
+<li>Support process established for questions</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_reporting_optimization" model="project.task">
+        <field name="name">Reporting System Optimization</field>
+        <field name="project_id" ref="project_template_reporting_automation" />
+        <field name="stage_id" ref="project_stage_reporting_optimization" />
+        <field name="planned_hours">4</field>
+        <field name="description">Review and optimize reporting based on initial usage</field>
+        <field name="x_task_type">Review</field>
+        <field name="x_task_phase">Optimization</field>
+        <field name="x_estimated_hours">4</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Initial implementation may need refinements</li>
+<li>Target Outcome: Fully optimized reporting system</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Usage analysis report</li>
+<li>Performance optimization recommendations</li>
+<li>Additional report/dashboard recommendations</li>
+<li>System refinements implementation</li>
+<li>Future enhancement roadmap</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>System performance reviewed and optimized</li>
+<li>User feedback collected and addressed</li>
+<li>Refinements implemented</li>
+<li>Future enhancement plan agreed upon</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <!-- ======================= -->
+    <!-- CAMPAIGN SCALING TASKS -->
+    <!-- ======================= -->
+
+    <record id="task_template_campaign_workflow_assessment" model="project.task">
+        <field name="name">Campaign Workflow Assessment</field>
+        <field name="project_id" ref="project_template_campaign_scaling" />
+        <field name="stage_id" ref="project_stage_campaign_discovery" />
+        <field name="planned_hours">24</field>
+        <field name="description">Document current campaign management process and bottlenecks</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">24</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Manual, time-intensive campaign management</li>
+<li>Target Outcome: Clear understanding of scaling opportunities</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Current campaign workflow documentation</li>
+<li>Time allocation analysis</li>
+<li>Bottleneck identification</li>
+<li>Manual vs. automatable process map</li>
+<li>Scaling opportunity assessment</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>Complete documentation of current workflow</li>
+<li>Time investments quantified for each process</li>
+<li>Clear identification of scaling opportunities</li>
+<li>Prioritized list of process improvements</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_campaign_scaling_strategy" model="project.task">
+        <field name="name">Scaling Strategy Development</field>
+        <field name="project_id" ref="project_template_campaign_scaling" />
+        <field name="stage_id" ref="project_stage_campaign_discovery" />
+        <field name="planned_hours">32</field>
+        <field name="description">Develop comprehensive strategy for scaling campaigns</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">32</field>
+        <field name="x_jtbd_context"><![CDATA[
+<p><strong>JTBD Context:</strong></p>
+<ul>
+<li>Job Statement: {{x_job_statement}}</li>
+<li>Current Challenge: Lack of strategic approach to campaign scaling</li>
+<li>Target Outcome: Clear roadmap for efficient campaign scaling</li>
+</ul>
+        ]]></field>
+        <field name="x_deliverables"><![CDATA[
+<ol>
+<li>Campaign scaling strategy document</li>
+<li>Technology solution recommendations</li>
+<li>Process standardization plan</li>
+<li>Resource allocation strategy</li>
+<li>Implementation roadmap</li>
+</ol>
+        ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+<ul>
+<li>Scaling strategy approved by client</li>
+<li>Technology solutions selected</li>
+<li>Implementation plan with clear milestones</li>
+<li>Resource requirements defined</li>
+</ul>
+        ]]></field>
+    </record>
+
+    <record id="task_template_campaign_templates" model="project.task">
+        <field name="name">Campaign Template Creation</field>
+        <field name="project_id" ref="project_template_campaign_scaling" />
+        <field name="stage_id" ref="project_stage_campaign_implementation" />
+        <field name="planned_hours">40</field>
+        <field name="description">Create standardized templates for scalable campaign management</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">40</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Each campaign built from scratch</li>
+    <li>Target Outcome: Reusable campaign templates that reduce setup time</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Templatized campaign structures</li>
+    <li>Standard targeting parameters</li>
+    <li>Creative frameworks and guidelines</li>
+    <li>Campaign settings templates</li>
+    <li>Template library organization</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Templates created for all campaign types</li>
+    <li>Templates tested and validated</li>
+    <li>Documentation for template usage</li>
+    <li>Template library accessible to team</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_campaign_automation" model="project.task">
+        <field name="name">Automation Workflow Setup</field>
+        <field name="project_id" ref="project_template_campaign_scaling" />
+        <field name="stage_id" ref="project_stage_campaign_implementation" />
+        <field name="planned_hours">40</field>
+        <field name="description">Implement automation workflows for campaign management</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">40</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Manual campaign management tasks</li>
+    <li>Target Outcome: Automated workflows that reduce manual effort</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Automated workflow design</li>
+    <li>Rules-based automation implementation</li>
+    <li>Campaign creation automation</li>
+    <li>Reporting automation</li>
+    <li>Optimization automation</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Automation workflows implemented and tested</li>
+    <li>Manual time reduced by target percentage</li>
+    <li>Error rates below acceptable threshold</li>
+    <li>Workflow documentation completed</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_campaign_monitoring" model="project.task">
+        <field name="name">Performance Monitoring System</field>
+        <field name="project_id" ref="project_template_campaign_scaling" />
+        <field name="stage_id" ref="project_stage_campaign_implementation" />
+        <field name="planned_hours">24</field>
+        <field name="description">Configure scalable performance monitoring system</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">24</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Labor-intensive performance monitoring</li>
+    <li>Target Outcome: Automated performance monitoring at scale</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>KPI framework and definitions</li>
+    <li>Automated monitoring dashboards</li>
+    <li>Alert system configuration</li>
+    <li>Anomaly detection setup</li>
+    <li>Executive reporting views</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Performance monitoring system implemented</li>
+    <li>Alerts and notifications configured</li>
+    <li>Dashboards accessible to stakeholders</li>
+    <li>System verified with live campaign data</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_campaign_training" model="project.task">
+        <field name="name">Team Training Program</field>
+        <field name="project_id" ref="project_template_campaign_scaling" />
+        <field name="stage_id" ref="project_stage_campaign_training" />
+        <field name="planned_hours">16</field>
+        <field name="description">Train team on new campaign management system</field>
+        <field name="x_task_type">Training</field>
+        <field name="x_task_phase">Training</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Team not familiar with scaled approach</li>
+    <li>Target Outcome: Capable team using new campaign scaling system</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Training curriculum development</li>
+    <li>Training session delivery</li>
+    <li>Hands-on exercises</li>
+    <li>Reference materials and documentation</li>
+    <li>Competency assessment</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>All team members trained on new system</li>
+    <li>Competency verified through assessments</li>
+    <li>Documentation available for reference</li>
+    <li>Support process established</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_campaign_optimization" model="project.task">
+        <field name="name">Campaign Optimization Framework</field>
+        <field name="project_id" ref="project_template_campaign_scaling" />
+        <field name="stage_id" ref="project_stage_campaign_optimization" />
+        <field name="planned_hours">16</field>
+        <field name="description">Implement systematic optimization framework</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Optimization</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Ad-hoc optimization without system</li>
+    <li>Target Outcome: Systematic optimization at scale</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Optimization methodology document</li>
+    <li>Optimization schedule and framework</li>
+    <li>Performance improvement protocols</li>
+    <li>A/B testing framework</li>
+    <li>Budget reallocation rules</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Optimization framework implemented</li>
+    <li>Team using systematic approach</li>
+    <li>Framework documented for consistency</li>
+    <li>Initial optimization results verified</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_campaign_review" model="project.task">
+        <field name="name">Review and Refinement</field>
+        <field name="project_id" ref="project_template_campaign_scaling" />
+        <field name="stage_id" ref="project_stage_campaign_optimization" />
+        <field name="planned_hours">8</field>
+        <field name="description">Review initial implementation and optimize processes</field>
+        <field name="x_task_type">Review</field>
+        <field name="x_task_phase">Optimization</field>
+        <field name="x_estimated_hours">8</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Initial implementation may need refinements</li>
+    <li>Target Outcome: Fully optimized campaign scaling system</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Implementation review report</li>
+    <li>Efficiency metrics analysis</li>
+    <li>Process refinement recommendations</li>
+    <li>System enhancement implementation</li>
+    <li>Future scalability roadmap</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Complete review conducted</li>
+    <li>Refinements implemented</li>
+    <li>Efficiency metrics improved</li>
+    <li>Future enhancement plan agreed upon</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <!-- ========================= -->
+    <!-- MARGIN IMPROVEMENT TASKS -->
+    <!-- ========================= -->
+
+    <record id="task_template_margin_analysis" model="project.task">
+        <field name="name">Profit Margin Analysis</field>
+        <field name="project_id" ref="project_template_margin_improvement" />
+        <field name="stage_id" ref="project_stage_margin_discovery" />
+        <field name="planned_hours">16</field>
+        <field name="description">Analyze current profit margins and identify improvement areas</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Unclear profit margin drivers and issues</li>
+    <li>Target Outcome: Clear understanding of margin improvement opportunities</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Profit margin analysis by client/service</li>
+    <li>Cost structure breakdown</li>
+    <li>Margin variance analysis</li>
+    <li>Profitability drivers identification</li>
+    <li>Opportunity prioritization framework</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Comprehensive margin analysis completed</li>
+    <li>Key profit drivers identified</li>
+    <li>Improvement opportunities quantified</li>
+    <li>Prioritized list of focus areas approved</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_margin_cost_assessment" model="project.task">
+        <field name="name">Cost Structure Assessment</field>
+        <field name="project_id" ref="project_template_margin_improvement" />
+        <field name="stage_id" ref="project_stage_margin_analysis" />
+        <field name="planned_hours">16</field>
+        <field name="description">Evaluate cost structure and identify optimization opportunities</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Inefficient cost structure affecting margins</li>
+    <li>Target Outcome: Identified cost reduction opportunities</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Detailed cost breakdown analysis</li>
+    <li>Cost per service/deliverable calculation</li>
+    <li>Time tracking analysis</li>
+    <li>Resource utilization assessment</li>
+    <li>Cost reduction recommendations</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Complete cost structure documented</li>
+    <li>Cost drivers identified</li>
+    <li>Cost reduction opportunities quantified</li>
+    <li>Recommendations prioritized by impact</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_margin_delivery_optimization" model="project.task">
+        <field name="name">Service Delivery Optimization</field>
+        <field name="project_id" ref="project_template_margin_improvement" />
+        <field name="stage_id" ref="project_stage_margin_analysis" />
+        <field name="planned_hours">24</field>
+        <field name="description">Identify improvements in service delivery efficiency</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">24</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Inefficient service delivery processes</li>
+    <li>Target Outcome: Streamlined delivery with improved margins</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Service delivery process mapping</li>
+    <li>Efficiency analysis and benchmarking</li>
+    <li>Process improvement recommendations</li>
+    <li>Standardization opportunities</li>
+    <li>Technology enhancement suggestions</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Current delivery processes fully mapped</li>
+    <li>Inefficiencies identified and quantified</li>
+    <li>Improvement recommendations approved</li>
+    <li>Implementation plan created</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_margin_pricing" model="project.task">
+        <field name="name">Pricing Strategy Refinement</field>
+        <field name="project_id" ref="project_template_margin_improvement" />
+        <field name="stage_id" ref="project_stage_margin_implementation" />
+        <field name="planned_hours">16</field>
+        <field name="description">Refine pricing strategy to improve margins</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Pricing not aligned with value delivery</li>
+    <li>Target Outcome: Value-based pricing that improves margins</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Pricing analysis and benchmarking</li>
+    <li>Value-based pricing model</li>
+    <li>Pricing structure recommendations</li>
+    <li>Client communication strategy</li>
+    <li>Implementation plan</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>New pricing strategy approved</li>
+    <li>Pricing structure documented</li>
+    <li>Communication materials created</li>
+    <li>Implementation plan ready</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_margin_resource" model="project.task">
+        <field name="name">Resource Allocation Optimization</field>
+        <field name="project_id" ref="project_template_margin_improvement" />
+        <field name="stage_id" ref="project_stage_margin_implementation" />
+        <field name="planned_hours">16</field>
+        <field name="description">Optimize resource allocation for improved efficiency</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Suboptimal resource allocation</li>
+    <li>Target Outcome: Efficient resource utilization improving margins</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Resource allocation analysis</li>
+    <li>Skill-to-task matching framework</li>
+    <li>Resource capacity planning</li>
+    <li>Team structure recommendations</li>
+    <li>Implementation plan</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Resource allocation plan approved</li>
+    <li>Implementation steps documented</li>
+    <li>Team structure adjustments planned</li>
+    <li>Tracking metrics established</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_margin_automation" model="project.task">
+        <field name="name">Process Automation Implementation</field>
+        <field name="project_id" ref="project_template_margin_improvement" />
+        <field name="stage_id" ref="project_stage_margin_implementation" />
+        <field name="planned_hours">16</field>
+        <field name="description">Implement automation to reduce service delivery costs</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Manual processes consuming excessive time</li>
+    <li>Target Outcome: Automated processes reducing costs</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Automation opportunity prioritization</li>
+    <li>Technology solution selection</li>
+    <li>Workflow automation implementation</li>
+    <li>Integration with existing systems</li>
+    <li>Time savings documentation</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Priority automations implemented</li>
+    <li>Time savings verified</li>
+    <li>Team trained on new automated processes</li>
+    <li>Documentation completed</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_margin_tracking" model="project.task">
+        <field name="name">Margin Tracking System</field>
+        <field name="project_id" ref="project_template_margin_improvement" />
+        <field name="stage_id" ref="project_stage_margin_implementation" />
+        <field name="planned_hours">8</field>
+        <field name="description">Configure tracking system for margin metrics</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">8</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: No real-time visibility into margins</li>
+    <li>Target Outcome: Proactive margin management system</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Margin KPI definition document</li>
+    <li>Tracking dashboard implementation</li>
+    <li>Alert system configuration</li>
+    <li>Reporting automation</li>
+    <li>Management review process</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Margin tracking system implemented</li>
+    <li>Real-time dashboard operational</li>
+    <li>Team trained on system usage</li>
+    <li>Alert thresholds configured</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_margin_verification" model="project.task">
+        <field name="name">Review and Verification</field>
+        <field name="project_id" ref="project_template_margin_improvement" />
+        <field name="stage_id" ref="project_stage_margin_verification" />
+        <field name="planned_hours">8</field>
+        <field name="description">Review implementation and verify margin improvements</field>
+        <field name="x_task_type">Review</field>
+        <field name="x_task_phase">Verification</field>
+        <field name="x_estimated_hours">8</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Verifying effectiveness of improvements</li>
+    <li>Target Outcome: Confirmed margin improvements and next steps</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Implementation review report</li>
+    <li>Margin improvement verification</li>
+    <li>Effectiveness analysis by initiative</li>
+    <li>Further optimization recommendations</li>
+    <li>Sustainability plan</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Margin improvements verified</li>
+    <li>Implementation effectiveness analyzed</li>
+    <li>Future improvements identified</li>
+    <li>Sustainability plan approved</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <!-- ======================== -->
+    <!-- CLIENT RETENTION TASKS -->
+    <!-- ======================== -->
+
+    <record id="task_template_retention_satisfaction" model="project.task">
+        <field name="name">Client Satisfaction Assessment</field>
+        <field name="project_id" ref="project_template_client_retention" />
+        <field name="stage_id" ref="project_stage_retention_discovery" />
+        <field name="planned_hours">16</field>
+        <field name="description">Evaluate current client satisfaction and identify improvement
+            areas</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Unclear drivers of client churn</li>
+    <li>Target Outcome: Clear understanding of satisfaction factors</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Client satisfaction survey results</li>
+    <li>In-depth client interviews</li>
+    <li>Historical churn analysis</li>
+    <li>Satisfaction drivers identification</li>
+    <li>Improvement opportunity prioritization</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Comprehensive satisfaction assessment completed</li>
+    <li>Churn factors identified</li>
+    <li>Improvement opportunities quantified</li>
+    <li>Priority focus areas approved</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_retention_churn" model="project.task">
+        <field name="name">Churn Analysis</field>
+        <field name="project_id" ref="project_template_client_retention" />
+        <field name="stage_id" ref="project_stage_retention_discovery" />
+        <field name="planned_hours">16</field>
+        <field name="description">Analyze historical churn patterns and root causes</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: High client churn without clear understanding of causes</li>
+    <li>Target Outcome: Data-driven understanding of churn factors</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Historical churn data analysis</li>
+    <li>Client segment churn patterns</li>
+    <li>Exit interview synthesis</li>
+    <li>Churn prediction indicators</li>
+    <li>Financial impact assessment</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Comprehensive churn analysis completed</li>
+    <li>Key churn patterns identified</li>
+    <li>At-risk client segments defined</li>
+    <li>Early warning indicators established</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_retention_strategy" model="project.task">
+        <field name="name">Retention Strategy Development</field>
+        <field name="project_id" ref="project_template_client_retention" />
+        <field name="stage_id" ref="project_stage_retention_strategy" />
+        <field name="planned_hours">24</field>
+        <field name="description">Develop comprehensive strategy for improving retention</field>
+        <field name="x_task_type">Assessment</field>
+        <field name="x_task_phase">Discovery</field>
+        <field name="x_estimated_hours">24</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Reactive approach to retention</li>
+    <li>Target Outcome: Proactive retention strategy</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Comprehensive retention strategy document</li>
+    <li>Segment-specific retention tactics</li>
+    <li>Implementation roadmap</li>
+    <li>Resource requirements</li>
+    <li>Success metrics definition</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Retention strategy approved</li>
+    <li>Implementation plan with clear milestones</li>
+    <li>Resource allocation approved</li>
+    <li>Success metrics established</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_retention_communication" model="project.task">
+        <field name="name">Client Communication Framework</field>
+        <field name="project_id" ref="project_template_client_retention" />
+        <field name="stage_id" ref="project_stage_retention_implementation" />
+        <field name="planned_hours">16</field>
+        <field name="description">Implement structured client communication framework</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+    <p><strong>JTBD Context:</strong></p>
+    <ul>
+    <li>Job Statement: {{x_job_statement}}</li>
+    <li>Current Challenge: Inconsistent client communications</li>
+    <li>Target Outcome: Structured communication improving satisfaction</li>
+    </ul>
+            ]]></field>
+        <field name="x_deliverables"><![CDATA[
+    <ol>
+    <li>Communication cadence framework</li>
+    <li>Template development for standard communications</li>
+    <li>Client feedback mechanisms</li>
+    <li>Communication tracking system</li>
+    <li>Escalation protocols</li>
+    </ol>
+            ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+    <ul>
+    <li>Communication framework implemented</li>
+    <li>Templates created for all standard touchpoints</li>
+    <li>Team trained on framework usage</li>
+    <li>Tracking system operational</li>
+    </ul>
+            ]]></field>
+    </record>
+
+    <record id="task_template_retention_success_metrics" model="project.task">
+        <field name="name">Client Success Metrics Setup</field>
+        <field name="project_id" ref="project_template_client_retention" />
+        <field name="stage_id" ref="project_stage_retention_implementation" />
+        <field name="planned_hours">16</field>
+        <field name="description">Define and track client success metrics</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+        <p><strong>JTBD Context:</strong></p>
+        <ul>
+        <li>Job Statement: {{x_job_statement}}</li>
+        <li>Current Challenge: No objective measures of client success</li>
+        <li>Target Outcome: Clear success metrics for each client</li>
+        </ul>
+                ]]></field>
+        <field name="x_deliverables"><![CDATA[
+        <ol>
+        <li>Client success metrics framework</li>
+        <li>Client-specific goals definition</li>
+        <li>Success tracking implementation</li>
+        <li>Progress reporting templates</li>
+        <li>Goal achievement celebration process</li>
+        </ol>
+                ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+        <ul>
+        <li>Success metrics defined for all clients</li>
+        <li>Tracking system implemented</li>
+        <li>Reporting templates created</li>
+        <li>Team trained on metrics framework</li>
+        </ul>
+                ]]></field>
+    </record>
+
+    <record id="task_template_retention_review" model="project.task">
+        <field name="name">Account Review Process Implementation</field>
+        <field name="project_id" ref="project_template_client_retention" />
+        <field name="stage_id" ref="project_stage_retention_implementation" />
+        <field name="planned_hours">16</field>
+        <field name="description">Establish regular account review process</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+        <p><strong>JTBD Context:</strong></p>
+        <ul>
+        <li>Job Statement: {{x_job_statement}}</li>
+        <li>Current Challenge: Inconsistent account reviews</li>
+        <li>Target Outcome: Structured review process improving retention</li>
+        </ul>
+                ]]></field>
+        <field name="x_deliverables"><![CDATA[
+        <ol>
+        <li>Account review process framework</li>
+        <li>Review meeting templates</li>
+        <li>Performance review materials</li>
+        <li>Value demonstration tools</li>
+        <li>Action planning templates</li>
+        </ol>
+                ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+        <ul>
+        <li>Account review process implemented</li>
+        <li>All templates and materials created</li>
+        <li>Team trained on conducting reviews</li>
+        <li>Initial reviews scheduled</li>
+        </ul>
+                ]]></field>
+    </record>
+
+    <record id="task_template_retention_health" model="project.task">
+        <field name="name">Client Health Monitoring</field>
+        <field name="project_id" ref="project_template_client_retention" />
+        <field name="stage_id" ref="project_stage_retention_implementation" />
+        <field name="planned_hours">16</field>
+        <field name="description">Configure client health monitoring system</field>
+        <field name="x_task_type">Implementation</field>
+        <field name="x_task_phase">Setup</field>
+        <field name="x_estimated_hours">16</field>
+        <field name="x_jtbd_context"><![CDATA[
+        <p><strong>JTBD Context:</strong></p>
+        <ul>
+        <li>Job Statement: {{x_job_statement}}</li>
+        <li>Current Challenge: Reactive response to client issues</li>
+        <li>Target Outcome: Proactive monitoring of client health</li>
+        </ul>
+                ]]></field>
+        <field name="x_deliverables"><![CDATA[
+        <ol>
+        <li>Client health score methodology</li>
+        <li>Health monitoring dashboard</li>
+        <li>Early warning system implementation</li>
+        <li>Intervention playbooks</li>
+        <li>Risk level tracking</li>
+        </ol>
+                ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+        <ul>
+        <li>Health scoring system implemented</li>
+        <li>Dashboard operational and accessible</li>
+        <li>Alert system configured</li>
+        <li>Intervention process documented</li>
+        </ul>
+                ]]></field>
+    </record>
+
+    <record id="task_template_retention_optimization" model="project.task">
+        <field name="name">Review and Optimization</field>
+        <field name="project_id" ref="project_template_client_retention" />
+        <field name="stage_id" ref="project_stage_retention_review" />
+        <field name="planned_hours">8</field>
+        <field name="description">Review implementation and optimize retention systems</field>
+        <field name="x_task_type">Review</field>
+        <field name="x_task_phase">Verification</field>
+        <field name="x_estimated_hours">8</field>
+        <field name="x_jtbd_context"><![CDATA[
+        <p><strong>JTBD Context:</strong></p>
+        <ul>
+        <li>Job Statement: {{x_job_statement}}</li>
+        <li>Current Challenge: Initial implementation needs refinement</li>
+        <li>Target Outcome: Optimized retention program</li>
+        </ul>
+                ]]></field>
+        <field name="x_deliverables"><![CDATA[
+        <ol>
+        <li>Implementation review report</li>
+        <li>Early results analysis</li>
+        <li>System refinement recommendations</li>
+        <li>Process optimization implementation</li>
+        <li>Long-term retention roadmap</li>
+        </ol>
+                ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+        <ul>
+        <li>Implementation thoroughly reviewed</li>
+        <li>Refinements identified and implemented</li>
+        <li>Initial retention improvements verified</li>
+        <li>Long-term plan approved</li>
+        </ul>
+                ]]></field>
+    </record>
+
+    <record id="task_template_retention_quarterly" model="project.task">
+        <field name="name">Quarterly Relationship Review</field>
+        <field name="project_id" ref="project_template_client_retention" />
+        <field name="stage_id" ref="project_stage_retention_review" />
+        <field name="planned_hours">8</field>
+        <field name="description">Conduct initial quarterly reviews with key clients</field>
+        <field name="x_task_type">Review</field>
+        <field name="x_task_phase">Verification</field>
+        <field name="x_estimated_hours">8</field>
+        <field name="x_jtbd_context"><![CDATA[
+        <p><strong>JTBD Context:</strong></p>
+        <ul>
+        <li>Job Statement: {{x_job_statement}}</li>
+        <li>Current Challenge: Demonstrating value to clients systematically</li>
+        <li>Target Outcome: Structured value demonstration improving retention</li>
+        </ul>
+                ]]></field>
+        <field name="x_deliverables"><![CDATA[
+        <ol>
+        <li>Quarterly review sessions with key clients</li>
+        <li>Performance review presentations</li>
+        <li>Value documentation</li>
+        <li>Future planning discussions</li>
+        <li>Relationship enhancement recommendations</li>
+        </ol>
+                ]]></field>
+        <field name="x_definition_of_done"><![CDATA[
+        <ul>
+        <li>Initial QBRs conducted with priority clients</li>
+        <li>Client feedback collected</li>
+        <li>Process refinements identified</li>
+        <li>Next review cycle scheduled</li>
+        </ul>
+                ]]></field>
+    </record>
+
+    <!-- Create a complete XML file by adding the closing odoo tag -->
+</odoo>

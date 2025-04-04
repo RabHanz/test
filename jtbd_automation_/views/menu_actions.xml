@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- JTBD Dashboard Menu -->
+    <menuitem id="menu_jtbd_dashboard" name="JTBD Dashboards" sequence="1"
+        parent="crm.menu_crm_root" />
+
+    <!-- Sales Dashboard -->
+    <record id="action_dashboard_sales_jtbd" model="ir.actions.act_window">
+        <field name="name">Sales JTBD Dashboard</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">dashboard,tree,form</field>
+        <field name="view_id" ref="view_dashboard_sales_jtbd" />
+        <field name="domain">[('type', '=', 'opportunity')]</field>
+        <field name="context">{'group_by': 'x_job_category'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No opportunities found. Let's create one!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_dashboard_sales_jtbd"
+        name="Sales JTBD Dashboard"
+        parent="menu_jtbd_dashboard"
+        action="action_dashboard_sales_jtbd"
+        sequence="1" />
+
+    <!-- Project Manager Dashboard -->
+    <record id="action_dashboard_project_manager_jtbd" model="ir.actions.act_window">
+        <field name="name">Project Manager JTBD Dashboard</field>
+        <field name="res_model">project.project</field>
+        <field name="view_mode">dashboard,tree,form</field>
+        <field name="view_id" ref="view_dashboard_project_manager_jtbd" />
+        <field name="domain">[('is_template', '=', False)]</field>
+        <field name="context">{'group_by': 'x_job_category'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No projects found. Projects will be created from won opportunities.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_dashboard_project_manager_jtbd"
+        name="Project Manager JTBD Dashboard"
+        parent="menu_jtbd_dashboard"
+        action="action_dashboard_project_manager_jtbd"
+        sequence="2" />
+
+    <!-- Executive Dashboard -->
+    <record id="action_dashboard_executive_jtbd" model="ir.actions.act_window">
+        <field name="name">Executive JTBD Dashboard</field>
+        <field name="res_model">project.project</field>
+        <field name="view_mode">dashboard,tree,form</field>
+        <field name="view_id" ref="view_dashboard_executive_jtbd" />
+        <field name="domain">[('is_template', '=', False)]</field>
+        <field name="context">{'group_by': 'x_outcome_status'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No projects found. Projects will be created from won opportunities.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_dashboard_executive_jtbd"
+        name="Executive JTBD Dashboard"
+        parent="menu_jtbd_dashboard"
+        action="action_dashboard_executive_jtbd"
+        sequence="3" />
+
+    <!-- JTBD Configuration Menu -->
+    <menuitem id="menu_jtbd_configuration" name="JTBD Configuration" sequence="100"
+        parent="crm.menu_crm_config" />
+
+    <!-- Project Templates Menu -->
+    <record id="action_project_templates_jtbd" model="ir.actions.act_window">
+        <field name="name">JTBD Project Templates</field>
+        <field name="res_model">project.project</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_template', '=', True)]</field>
+        <field name="context">{'default_is_template': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No project templates found. Let's create one!
+            </p>
+            <p>
+                Project templates define the standard tasks and milestones
+                that will be automatically created when a new project is
+                generated from a won opportunity.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_project_templates_jtbd"
+        name="Project Templates"
+        parent="menu_jtbd_configuration"
+        action="action_project_templates_jtbd"
+        sequence="1" />
+</odoo>

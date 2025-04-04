@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_jtbd_crm_fields_user,jtbd.crm.fields.user,model_crm_lead,sales_team.group_sale_salesman,1,1,1,0
+access_jtbd_crm_fields_manager,jtbd.crm.fields.manager,model_crm_lead,sales_team.group_sale_manager,1,1,1,1
+access_jtbd_project_fields_user,jtbd.project.fields.user,model_project_project,project.group_project_user,1,1,1,0
+access_jtbd_project_fields_manager,jtbd.project.fields.manager,model_project_project,project.group_project_manager,1,1,1,1
+access_jtbd_task_fields_user,jtbd.task.fields.user,model_project_task,project.group_project_user,1,1,1,0
+access_jtbd_task_fields_manager,jtbd.task.fields.manager,model_project_task,project.group_project_manager,1,1,1,1

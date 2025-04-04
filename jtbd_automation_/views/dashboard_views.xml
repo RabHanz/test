@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Sales Dashboard -->
+<record id="view_dashboard_sales_jtbd" model="ir.ui.view">
+    <field name="name">dashboard.sales.jtbd</field>
+    <field name="model">crm.lead</field>
+    <field name="arch" type="xml">
+        <dashboard>
+            <view type="graph" ref="jtbd_automation.view_crm_lead_graph_jtbd" />
+            <group string="JTBD Opportunities">
+                <aggregate name="total_opportunities"
+                    field="id"
+                    string="Total Opportunities"
+                    help="Total number of opportunities" />
+                <aggregate name="won_opportunities"
+                    field="id"
+                    string="Won Opportunities"
+                    domain="[('stage_id.name', '=', 'Won')]"
+                    help="Number of won opportunities" />
+                <aggregate name="avg_implementation_hours"
+                    field="x_implementation_hours"
+                    string="Avg. Implementation Hours"
+                    group_operator="avg"
+                    help="Average implementation hours per opportunity" />
+                <aggregate name="avg_mrr"
+                    field="x_mrr"
+                    string="Avg. MRR"
+                    group_operator="avg"
+                    help="Average MRR per opportunity" />
+            </group>
+            <view type="pivot" ref="jtbd_automation.view_crm_lead_pivot_jtbd" />
+            <group string="Job Categories">
+                <widget name="pie_chart"
+                    title="Opportunities by Job Category"
+                    attrs="{'groupby': 'x_job_category'}" />
+            </group>
+            <group string="Outcome Gaps">
+                <widget name="bar_chart"
+                    title="Target vs Current Values"
+                    attrs="{'measure': ['x_target_value', 'x_current_value'], 'groupby': 'x_job_category'}" />
+            </group>
+        </dashboard>
+    </field>
+</record>
+
+<!-- Project Manager Dashboard -->
+<record id="view_dashboard_project_manager_jtbd" model="ir.ui.view">
+    <field name="name">dashboard.project.manager.jtbd</field>
+    <field name="model">project.project</field>
+    <field name="arch" type="xml">
+        <dashboard>
+            <view type="graph" ref="jtbd_automation.view_project_graph_jtbd" />
+            <group string="Project Overview">
+                <aggregate name="total_projects"
+                    field="id"
+                    string="Total Projects"
+                    help="Total number of projects" />
+                <aggregate name="completed_projects"
+                    field="id"
+                    string="Completed Projects"
+                    domain="[('x_outcome_status', '=', 'Complete')]"
+                    help="Number of completed projects" />
+                <aggregate name="at_risk_projects"
+                    field="id"
+                    string="At Risk Projects"
+                    domain="[('x_risk_level', '=', 'High Risk')]"
+                    help="Number of at-risk projects" />
+                <aggregate name="avg_progress"
+                    field="progress"
+                    string="Avg. Progress"
+                    group_operator="avg"
+                    help="Average project progress" />
+            </group>
+            <view type="pivot" ref="jtbd_automation.view_project_pivot_jtbd" />
+            <group string="Job Categories">
+                <widget name="pie_chart"
+                    title="Projects by Job Category"
+                    attrs="{'groupby': 'x_job_category'}" />
+            </group>
+            <group string="Project Progress">
+                <widget name="bar_chart"
+                    title="Progress by Job Category"
+                    attrs="{'measure': ['progress'], 'groupby': 'x_job_category'}" />
+            </group>
+        </dashboard>
+    </field>
+</record>
+
+<!-- Executive Dashboard -->
+<record id="view_dashboard_executive_jtbd" model="ir.ui.view">
+    <field name="name">dashboard.executive.jtbd</field>
+    <field name="model">project.project</field>
+    <field name="arch" type="xml">
+        <dashboard>
+            <view type="graph" ref="jtbd_automation.view_project_graph_executive" />
+            <group string="Portfolio Overview">
+                <aggregate name="total_active_projects"
+                    field="id"
+                    string="Active Projects"
+                    domain="[('active', '=', True), ('is_template', '=', False)]"
+                    help="Total number of active projects" />
+                <aggregate name="completed_outcome_rate"
+                    field="id"
+                    string="Outcome Achievement Rate"
+                    domain="[('x_outcome_status', '=', 'Complete')]"
+                    value_label="%"
+                    help="Percentage of projects that achieved target outcomes" />
+                <aggregate name="total_implementation_hours"
+                    field="x_implementation_hours"
+                    string="Total Implementation Hours"
+                    group_operator="sum"
+                    help="Total implementation hours across all projects" />
+                <aggregate name="economic_impact"
+                    field="x_opportunity_id.x_economic_impact"
+                    string="Total Economic Impact"
+                    group_operator="sum"
+                    help="Total economic impact across all projects" />
+            </group>
+            <view type="pivot" ref="jtbd_automation.view_project_pivot_executive" />
+            <group string="Outcome Achievement">
+                <widget name="bar_chart"
+                    title="Outcome Achievement by Category"
+                    attrs="{'measure': ['x_current_value', 'x_target_value'], 'groupby': 'x_job_category'}" />
+            </group>
+            <group string="Resource Allocation">
+                <widget name="pie_chart"
+                    title="Implementation Hours by Category"
+                    attrs="{'measure': ['x_implementation_hours'], 'groupby': 'x_job_category'}" />
+            </group>
+        </dashboard>
+    </field>
+</record>
+</odoo>
