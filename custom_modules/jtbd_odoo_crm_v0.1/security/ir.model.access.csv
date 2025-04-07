@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_jtbd_job_pattern_user,jtbd.job.pattern user access,model_jtbd_job_pattern,jtbd_odoo_crm.group_jtbd_user,1,0,0,0
+access_jtbd_job_pattern_manager,jtbd.job.pattern manager access,model_jtbd_job_pattern,jtbd_odoo_crm.group_jtbd_manager,1,1,1,1
+access_jtbd_job_statement_builder_user,jtbd.job.statement.builder user access,model_jtbd_job_statement_builder,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_jtbd_integration_settings_user,jtbd.integration.settings user access,model_jtbd_integration_settings,jtbd_odoo_crm.group_jtbd_user,1,0,0,0
+access_jtbd_integration_settings_manager,jtbd.integration.settings manager access,model_jtbd_integration_settings,jtbd_odoo_crm.group_jtbd_manager,1,1,1,1
