@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_jtbd_common_force_wizard_form" model="ir.ui.view">
+            <field name="name">jtbd.common.force.wizard.form</field>
+            <field name="model">jtbd.common.force.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Add Common Force">
+                    <group>
+                        <group>
+                            <!-- Make impact area primary selection -->
+                            <field name="impact_area" widget="radio" options="{'horizontal': False}"/>
+                        </group>
+                         <group>
+                            <!-- Force Description depends on Impact Area -->
+                            <field name="force_description_key"/>
+                            <field name="strength" widget="rating" options="{'max_value': 10, 'editable': True}"/>
+                            <field name="evidence" placeholder="Add any initial evidence or context..."/>
+                            <!-- Hidden fields -->
+                            <field name="analysis_id" invisible="1"/>
+                            <field name="force_type" invisible="1"/>
+                            <field name="force_options_str" invisible="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_add_force" string="Add Force" type="object" class="btn-primary"/>
+                        <button special="cancel" string="Cancel" class="btn-secondary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action definition (though usually called from Python) -->
+        <record id="action_jtbd_common_force_wizard" model="ir.actions.act_window">
+            <field name="name">Add Common Force</field>
+            <field name="res_model">jtbd.common.force.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+             <field name="view_id" ref="view_jtbd_common_force_wizard_form"/>
+        </record>
+
+    </data>
+</odoo>
