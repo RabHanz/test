@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- jtbd.outcome.mapping List View -->
+        <record id="view_jtbd_outcome_mapping_list" model="ir.ui.view">
+            <field name="name">jtbd.outcome.mapping.list</field>
+            <field name="model">jtbd.outcome.mapping</field>
+            <field name="arch" type="xml">
+                <!-- Added status decorations -->
+                <list string="Outcome Mappings"
+                      decoration-danger="jtbd_outcome_status == 'negative'"
+                      decoration-warning="jtbd_outcome_status == 'on_baseline'"
+                      decoration-success="jtbd_outcome_status == 'improving' or jtbd_outcome_status == 'achieved'"
+                      decoration-info="jtbd_outcome_status == 'exceeded'">
+                    <field name="name"/>
+                    <field name="lead_id"/>
+                    <field name="job_category"/>
+                    <field name="outcome_metric"/>
+                    <field name="baseline_value" optional="hide"/>
+                    <field name="current_value"/>
+                    <field name="target_value"/>
+                    <field name="metric_unit"/>
+                    <field name="primary_outcome_progress" widget="progressbar"/>
+                    <field name="jtbd_outcome_status" widget="badge"/> <!-- Added Status -->
+                    <field name="company_id" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- jtbd.outcome.mapping Form View -->
+        <record id="view_jtbd_outcome_mapping_form" model="ir.ui.view">
+            <field name="name">jtbd.outcome.mapping.form</field>
+            <field name="model">jtbd.outcome.mapping</field>
+            <field name="arch" type="xml">
+                <form string="Outcome Mapping">
+                    <header>
+                        <button name="action_apply_template" type="object" string="Apply Template" class="btn-secondary"/>
+                        <button name="action_update_opportunity" type="object" string="Update Opportunity" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                         <div class="oe_button_box" name="button_box">
+                             <button name="action_view_opportunity" type="object" class="oe_stat_button" icon="fa-handshake-o">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">Opportunity</span>
+                                </div>
+                             </button>
+                        </div>
+                        <div class="oe_title mb-3">
+                            <h1>
+                                <field name="name" placeholder="e.g., ROI Opportunity Assessment for [Client]"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Context">
+                                <field name="lead_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="job_category"/>
+                                <field name="company_id" invisible="1"/>
+                                <!-- Invisible fields needed for conditional visibility -->
+                                <field name="is_percentage" invisible="1"/>
+                                <field name="metric_unit" invisible="1"/>
+                                <field name="jtbd_outcome_raw_progress" invisible="1"/> <!-- Add invisible raw field -->
+                                <field name="jtbd_outcome_status" invisible="1"/> <!-- Add invisible status field -->
+                            </group>
+                            <group string="Job Statement">
+                                <field name="job_statement" nolabel="1" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Outcomes &amp; Milestones">
+                                <!-- Primary Outcome Section -->
+                                <div class="o_form_section mt-4">
+                                    <h3 class="o_horizontal_separator">Primary Outcome</h3>
+                                    <p class="text-muted mb-3">Define the primary outcome, baseline, current, and target values.</p>
+                                    <group>
+                                        <group>
+                                            <field name="outcome_metric" placeholder="e.g., Client Retention Rate"/>
+                                            <label for="baseline_value" string="Baseline Value"/>
+                                            <div class="o_row">
+                                                <field name="baseline_value" class="oe_inline"/>
+                                                <span class="oe_inline ms-1" invisible="is_percentage == False">%</span>
+                                                <field name="metric_unit" nolabel="1" class="oe_inline ms-1 text-muted" invisible="is_percentage == True or not metric_unit"/>
+                                            </div>
+                                            <label for="current_value" string="Current Value"/>
+                                            <div class="o_row">
+                                                <field name="current_value" class="oe_inline"/>
+                                                <span class="oe_inline ms-1" invisible="is_percentage == False">%</span>
+                                                <field name="metric_unit" nolabel="1" class="oe_inline ms-1 text-muted" invisible="is_percentage == True or not metric_unit"/>
+                                            </div>
+                                        </group>
+                                        <group>
+                                            <label for="metric_unit" string="Unit"/>
+                                            <div class="o_row">
+                                                <field name="metric_unit" class="oe_inline" placeholder="e.g., %, Days, $"/>
+                                                <field name="is_percentage" class="ms-2"/>
+                                                <label for="is_percentage" string="Is Percentage" class="ms-1 oe_inline"/>
+                                            </div>
+                                            <label for="target_value" string="Target Value"/>
+                                             <div class="o_row">
+                                                <field name="target_value" class="oe_inline"/>
+                                                 <span class="oe_inline ms-1" invisible="is_percentage == False">%</span>
+                                                 <field name="metric_unit" nolabel="1" class="oe_inline ms-1 text-muted" invisible="is_percentage == True or not metric_unit"/>
+                                            </div>
+                                            <!-- Progress Display -->
+                                            <label for="primary_outcome_progress" string="Progress"/>
+                                            <div>
+                                                <!-- Bar shows 0-100% progress -->
+                                                <field name="primary_outcome_progress" widget="progressbar" nolabel="1"/>
+                                                <!-- Badge shows status text -->
+                                                <field name="jtbd_outcome_status"
+                                                       widget="badge"
+                                                       decoration-danger="jtbd_outcome_status == 'negative'"
+                                                       decoration-warning="jtbd_outcome_status == 'on_baseline'"
+                                                       decoration-success="jtbd_outcome_status == 'improving'"
+                                                       decoration-primary="jtbd_outcome_status == 'achieved'"
+                                                       decoration-info="jtbd_outcome_status == 'exceeded'"
+                                                       decoration-muted="jtbd_outcome_status == 'no_data'"
+                                                       nolabel="1"
+                                                       class="ms-2 oe_inline"/>
+                                                <!-- Span shows RAW percentage when status is relevant -->
+                                                <span class="ms-1 oe_inline text-muted"
+                                                      invisible="jtbd_outcome_status not in ('negative', 'on_baseline', 'achieved', 'exceeded')">
+                                                      (<field name="jtbd_outcome_raw_progress" widget="float" options="{'digits': [16, 1]}" nolabel="1" class="oe_inline"/>%)
+                                                </span>
+                                            </div>
+                                        </group>
+                                    </group>
+                                </div>
+
+                                <!-- Additional Outcomes Section -->
+                                <div class="o_form_section mt-4">
+                                    <h3 class="o_horizontal_separator">Additional Outcomes</h3>
+                                    <p class="text-muted mb-3">Define secondary and supporting outcomes for this job.</p>
+                                    <field name="additional_outcome_ids" widget="one2many" mode="list">
+                                        <list editable="bottom">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="name" placeholder="e.g., Reduce Client Onboarding Time"/>
+                                            <field name="metric" placeholder="e.g., Avg. Onboarding Days"/>
+                                            <field name="current_value"/>
+                                            <field name="target_value"/>
+                                            <field name="metric_unit"/>
+                                            <field name="is_percentage"/>
+                                            <field name="priority" widget="priority"/>
+                                            <field name="notes" optional="hide"/>
+                                        </list>
+                                    </field>
+                                    <button name="action_suggest_additional_outcomes" type="object" string="Suggest Additional Outcomes" class="btn btn-link px-0 pt-2"/>
+                                </div>
+
+                                <!-- Milestones Section -->
+                                <div class="o_form_section mt-4">
+                                    <h3 class="o_horizontal_separator">Outcome Milestones</h3>
+                                    <p class="text-muted mb-3">Define the key milestones to track progress toward the desired outcomes.</p>
+                                    <field name="milestone_ids" widget="one2many" mode="list">
+                                        <list editable="bottom">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="name" placeholder="e.g., Initial ROI Validation"/>
+                                            <field name="target_date"/>
+                                            <field name="target_value"/>
+                                            <field name="achieved" widget="boolean_toggle"/>
+                                            <field name="actual_date" invisible="achieved == False" readonly="1"/>
+                                            <field name="actual_value" invisible="achieved == False" readonly="1"/>
+                                            <field name="notes" optional="show"/>
+                                        </list>
+                                    </field>
+                                     <button name="action_suggest_milestones" type="object" string="Suggest Milestones" class="btn btn-link px-0 pt-2"/>
+                                </div>
+                             </page>
+
+                            <page string="White Space &amp; Notes">
+                                <div class="o_form_section mt-4">
+                                    <h3 class="o_horizontal_separator">White Space Opportunities</h3>
+                                    <p class="text-muted mb-3">Identify additional untapped areas for future expansion based on this job.</p>
+                                    <field name="white_space" nolabel="1" placeholder="Describe potential follow-on opportunities..."/>
+                                    <button name="action_suggest_white_space" type="object" string="Suggest White Space" class="btn btn-link px-0 pt-2"/>
+                                </div>
+                                <div class="o_form_section mt-4">
+                                     <h3 class="o_horizontal_separator">Notes</h3>
+                                    <field name="notes" nolabel="1" placeholder="Additional context about outcomes, measurement, or white space..."/>
+                                 </div>
+                            </page>
+                             <page string="Log &amp; Activities" name="chatter_tab">
+                                <div class="oe_chatter" name="chatter_container">
+                                    <field name="message_follower_ids"/>
+                                    <field name="activity_ids"/>
+                                    <field name="message_ids"/>
+                                </div>
+                             </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Actions and Menu items -->
+        <record id="action_jtbd_create_outcome_mapping_from_lead" model="ir.actions.act_window">
+             <field name="name">Create Outcome Mapping</field>
+             <field name="res_model">jtbd.outcome.mapping</field>
+             <field name="view_mode">form</field>
+             <field name="target">current</field>
+             <field name="context">{
+                 'default_lead_id': active_id,
+                 'default_name': lambda self: _('Outcome Map for %s') % self.env['crm.lead'].browse(active_id).name if active_id else _('New Outcome Map'),
+                 'default_job_category': context.get('jtbd_job_category')
+             }</field>
+              <field name="help" type="html"><p>Create a new outcome map.</p></field>
+         </record>
+        <record id="action_jtbd_outcome_mapping" model="ir.actions.act_window">
+            <field name="name">Outcome Mappings</field>
+            <field name="res_model">jtbd.outcome.mapping</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('view_jtbd_outcome_mapping_list')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_jtbd_outcome_mapping_form')})]"/>
+            <field name="help" type="html"><p class="o_view_nocontent_smiling_face">Create Outcome Mapping</p></field>
+        </record>
+        <menuitem id="menu_jtbd_outcome_mapping" name="Outcome Mappings" parent="menu_jtbd_config" action="action_jtbd_outcome_mapping" sequence="40"/>
+        <record id="action_jtbd_outcome_mapping_lead" model="ir.actions.act_window">
+            <field name="name">Outcome Mappings</field>
+            <field name="res_model">jtbd.outcome.mapping</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('view_jtbd_outcome_mapping_list')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_jtbd_outcome_mapping_form')})]"/>
+            <field name="domain">[('lead_id', '=', active_id)]</field>
+            <field name="context">{'default_lead_id': active_id, 'search_default_lead_id': active_id}</field>
+            <field name="help" type="html"><p class="o_view_nocontent_smiling_face">No outcome maps found.</p></field>
+        </record>
+
+    </data>
+</odoo>
