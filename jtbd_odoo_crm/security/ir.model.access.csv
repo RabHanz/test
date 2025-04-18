@@ -1,0 +1,32 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_jtbd_job_pattern_user,jtbd.job.pattern user access,model_jtbd_job_pattern,jtbd_odoo_crm.group_jtbd_user,1,0,0,0
+access_jtbd_job_pattern_manager,jtbd.job.pattern manager access,model_jtbd_job_pattern,jtbd_odoo_crm.group_jtbd_manager,1,1,1,1
+access_jtbd_job_statement_builder_user,jtbd.job.statement.builder user access,model_jtbd_job_statement_builder,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_jtbd_integration_settings_user,jtbd.integration.settings user access,model_jtbd_integration_settings,jtbd_odoo_crm.group_jtbd_user,1,0,0,0
+access_jtbd_integration_settings_manager,jtbd.integration.settings manager access,model_jtbd_integration_settings,jtbd_odoo_crm.group_jtbd_manager,1,1,1,1
+access_jtbd_force_analysis_user,jtbd.force.analysis user access,model_jtbd_force_analysis,jtbd_odoo_crm.group_jtbd_user,1,1,1,0
+access_jtbd_force_analysis_manager,jtbd.force.analysis manager access,model_jtbd_force_analysis,jtbd_odoo_crm.group_jtbd_manager,1,1,1,1
+access_jtbd_force_item_user,jtbd.force.item user access,model_jtbd_force_item,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_jtbd_force_item_manager,jtbd.force.item manager access,model_jtbd_force_item,jtbd_odoo_crm.group_jtbd_manager,1,1,1,1
+access_jtbd_outcome_pattern_user,jtbd.outcome.pattern user access,model_jtbd_outcome_pattern,jtbd_odoo_crm.group_jtbd_user,1,0,0,0
+access_jtbd_outcome_pattern_manager,jtbd.outcome.pattern manager access,model_jtbd_outcome_pattern,jtbd_odoo_crm.group_jtbd_manager,1,1,1,1
+access_jtbd_outcome_mapping_user,jtbd.outcome.mapping user access,model_jtbd_outcome_mapping,jtbd_odoo_crm.group_jtbd_user,1,1,1,0
+access_jtbd_outcome_mapping_manager,jtbd.outcome.mapping manager access,model_jtbd_outcome_mapping,jtbd_odoo_crm.group_jtbd_manager,1,1,1,1
+access_jtbd_additional_outcome_user,jtbd.additional.outcome user access,model_jtbd_additional_outcome,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_jtbd_additional_outcome_manager,jtbd.additional.outcome manager access,model_jtbd_additional_outcome,jtbd_odoo_crm.group_jtbd_manager,1,1,1,1
+access_jtbd_outcome_milestone_user,jtbd.outcome.milestone user access,model_jtbd_outcome_milestone,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_jtbd_outcome_milestone_manager,jtbd.outcome.milestone manager access,model_jtbd_outcome_milestone,jtbd_odoo_crm.group_jtbd_manager,1,1,1,1
+access_jtbd_common_force_wizard_user,jtbd.common.force.wizard user access,model_jtbd_common_force_wizard,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_jtbd_outcome_template_wizard_user,jtbd.outcome.template.wizard user access,model_jtbd_outcome_template_wizard,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_jtbd_outcome_suggestion_wizard_user,jtbd.outcome.suggestion.wizard user access,model_jtbd_outcome_suggestion_wizard,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_jtbd_suggested_item_user,jtbd.suggested.item user access,model_jtbd_suggested_item,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_jtbd_common_force_description_user,jtbd.common.force.description user access,model_jtbd_common_force_description,jtbd_odoo_crm.group_jtbd_user,1,0,0,0
+access_jtbd_common_force_description_manager,jtbd.common.force.description manager access,model_jtbd_common_force_description,jtbd_odoo_crm.group_jtbd_manager,1,1,1,1
+access_jtbd_outcome_mapping_raw_progress_user,jtbd.outcome.mapping raw progress read user,model_jtbd_outcome_mapping,jtbd_odoo_crm.group_jtbd_user,1,0,0,0
+access_crm_lead_jtbd_agency_size_user,jtbd agency size lead access,crm.model_crm_lead,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_crm_lead_jtbd_revenue_range_user,jtbd revenue range lead access,crm.model_crm_lead,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_crm_lead_jtbd_account_tier_user,jtbd account tier lead access,crm.model_crm_lead,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_crm_lead_jtbd_current_tools_user,jtbd current tools lead access,crm.model_crm_lead,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_crm_lead_jtbd_tech_stack_match_user,jtbd tech match lead access,crm.model_crm_lead,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_crm_lead_jtbd_automation_source_user,jtbd automation source lead access,crm.model_crm_lead,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
+access_project_project_jtbd_onboarding_status_user,jtbd onboarding status project access,project.model_project_project,jtbd_odoo_crm.group_jtbd_user,1,1,1,1
