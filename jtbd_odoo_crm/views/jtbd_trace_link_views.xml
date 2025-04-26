@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- jtbd.trace.link List View -->
+        <record id="view_jtbd_trace_link_list" model="ir.ui.view">
+            <field name="name">jtbd.trace.link.list</field>
+            <field name="model">jtbd.trace.link</field>
+            <field name="arch" type="xml">
+                <list string="Traceability Links">
+                    <field name="sequence" widget="handle"/>
+                    <field name="source_model_id" string="Source Model"/>
+                    <field name="source_res_id" string="Source ID"/>
+                    <field name="link_relationship" string="Relationship"/>
+                    <field name="name" string="Link Description"/>
+                    <field name="target_link_type" string="Target Type"/>
+                    <field name="target_url" widget="url" optional="show"/>
+                    <field name="target_attachment_id" optional="show"/>
+                    <field name="target_record_ref" optional="show"/>
+                    <field name="target_external_ref" optional="show"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- jtbd.trace.link Form View -->
+        <record id="view_jtbd_trace_link_form" model="ir.ui.view">
+            <field name="name">jtbd.trace.link.form</field>
+            <field name="model">jtbd.trace.link</field>
+            <field name="arch" type="xml">
+                <form string="Traceability Link">
+                    <sheet>
+                         <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                         <h1><field name="name" placeholder="e.g., Link to Feature Spec for Outcome X"/></h1>
+                         <group>
+                            <group string="Source">
+                                <field name="source_model_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="source_res_id"/>
+                                <!-- <field name="source_ref" readonly="1"/> -->
+                            </group>
+                            <group string="Link Details">
+                                 <field name="link_relationship"/>
+                                 <field name="target_link_type"/>
+                                 <field name="active" invisible="1"/>
+                                 <field name="sequence" invisible="1"/>
+                            </group>
+                        </group>
+                         <group string="Target">
+                             <field name="target_url" widget="url" invisible="target_link_type != 'url'"/>
+                             <field name="target_attachment_id" invisible="target_link_type != 'attachment'"/>
+                             <field name="target_record_ref" invisible="target_link_type != 'odoo_record'"/>
+                             <field name="target_external_ref" invisible="target_link_type not in ('document_repo', 'code_commit', 'requirement', 'test_case', 'other')"/>
+                         </group>
+                         <group string="Notes">
+                            <field name="description" nolabel="1"/>
+                         </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Optional: Action and Menu Item if direct access is needed -->
+         <record id="action_jtbd_trace_link" model="ir.actions.act_window">
+             <field name="name">Traceability Links</field>
+             <field name="res_model">jtbd.trace.link</field>
+             <field name="view_mode">list,form</field>
+              <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Create a Traceability Link
+                </p><p>
+                  Manually link different JTBD artifacts (Jobs, Forces, Outcomes) to related content, requirements, features, etc.
+                </p>
+              </field>
+          </record>
+
+          <menuitem id="menu_jtbd_trace_links"
+                    name="All Trace Links"
+                    parent="menu_jtbd_config"
+                    action="action_jtbd_trace_link"
+                    sequence="100"/>
+
+    </data>
+</odoo>
