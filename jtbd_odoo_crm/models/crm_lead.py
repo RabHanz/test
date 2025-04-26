@@ -1,0 +1,519 @@
+# -*- coding: utf-8 -*-
+
+import re
+from odoo import models, fields, api, _
+# Import selections from the models where they are defined
+from .jtbd_job_pattern import JOB_CATEGORIES
+
+# Define selection values here to avoid duplication
+JOB_QUADRANTS = [
+    ('functional', 'Functional Job'),
+    ('emotional', 'Emotional Job'),
+    ('social', 'Social Job'),
+    ('strategic', 'Strategic Job'),
+    ('other', 'Other'),
+]
+
+# Define minimum length for validation in score calculation
+MIN_TEXT_LENGTH_SCORE = 10
+
+class CrmLead(models.Model):
+    _inherit = 'crm.lead'
+
+    # --- Core JTBD Framework Fields (Phase 1) ---
+    jtbd_job_category = fields.Selection(
+        selection=JOB_CATEGORIES, string='Job Category', index=True, tracking=True,
+        help="Primary Job-to-be-Done category identified for this opportunity."
+    )
+    jtbd_job_statement = fields.Text(
+        string='Job Statement', tracking=True,
+        help="Full Job Statement in 'When... I want to... So I can...' format."
+    )
+    jtbd_job_quadrant = fields.Selection(
+        selection=JOB_QUADRANTS, string='Job Quadrant', tracking=True,
+        help="Classification of the primary job (Functional, Emotional, Social, Strategic)."
+    )
+    jtbd_job_clarity_score = fields.Integer(
+        string='Job Clarity Score', compute='_compute_job_clarity_score', store=True,
+        readonly=True, tracking=True, aggregator="avg",
+        help="Score (0-100) indicating the clarity and completeness of the identified job statement."
+    )
+
+    # --- Analysis Summary Fields (Populated by Phase 2 Force Analysis Logic) ---
+    jtbd_force_analysis_count = fields.Integer(
+        compute='_compute_jtbd_analysis_counts', string="Force Analyses",
+        help="Number of Force Analyses linked to this opportunity."
+    )
+    jtbd_momentum_score = fields.Integer(
+        string='Momentum Score', readonly=True, tracking=True, aggregator="avg",
+        help="Latest calculated momentum score (0-100) from Force Analysis."
+    )
+    jtbd_signal_strength = fields.Integer(
+        string='Signal Strength', readonly=True, tracking=True, aggregator="avg",
+        help="Latest calculated signal strength (0-100) combining intent and triggers."
+    )
+    jtbd_trigger_window = fields.Selection(
+         [('immediate', 'Immediate (0-30 days)'),
+          ('short', 'Short-term (1-3 months)'),
+          ('medium', 'Medium-term (3-6 months)'),
+          ('long', 'Long-term (6+ months)'),
+          ('undefined', 'Undefined')],
+         string='Decision Window', readonly=True, tracking=True,
+         help="Estimated decision timing based on Force Analysis."
+    )
+    jtbd_contract_loss = fields.Boolean(
+        string='Recent Contract Loss', readonly=True, tracking=True,
+        help="Indicates if a significant contract loss was identified as a trigger."
+    )
+    jtbd_risk_level = fields.Selection(
+        [('low', 'Low'), ('medium', 'Medium'), ('high', 'High'), ('undefined', 'Undefined')],
+        string='Risk Level', readonly=True, tracking=True,
+        help="Risk assessment based on Force Analysis momentum."
+    )
+
+    # --- Outcome Summary Fields (Populated by Phase 2 Outcome Mapping Logic) ---
+    jtbd_outcome_mapping_count = fields.Integer(
+        compute='_compute_jtbd_analysis_counts', string="Outcome Maps",
+        help="Number of Outcome Maps linked to this opportunity."
+    )
+    jtbd_outcome_metric = fields.Char(
+        string='Primary Outcome Metric', readonly=True, tracking=True,
+        help="The primary metric defined in the Outcome Mapping."
+    )
+    jtbd_white_space = fields.Text(
+        string='White Space Opportunities', readonly=True, tracking=True,
+        help="Identified expansion opportunities from Outcome Mapping."
+    )
+    
+    # --- Inverse Relations for Related JTBD Records ---
+    jtbd_force_analysis_ids = fields.One2many(
+        'jtbd.force.analysis', # Related Model
+        'lead_id', # Inverse Field Name on related model
+        string='Force Analyses (Related)',
+        readonly=True, # Typically read-only on the lead form itself
+        help="Force Analyses associated with this opportunity."
+    )
+    jtbd_outcome_mapping_ids = fields.One2many(
+        'jtbd.outcome.mapping', # Related Model
+        'lead_id', # Inverse Field Name on related model
+        string='Outcome Maps (Related)',
+        readonly=True,
+        help="Outcome Maps associated with this opportunity."
+    )
+    # --- End Inverse Relations ---    
+    
+    # --- Economic Analysis Fields (PRD3 Phase 3) ---
+    jtbd_mrr = fields.Monetary(
+        string="Est. MRR/Project Value", # Clarified label
+        currency_field='company_currency', # Use company currency from base lead model
+        tracking=True,
+        help="Estimated Monthly Recurring Revenue or total value for project-based work."
+    )
+    # Placeholder for CAC - needed for ratio calculation
+    jtbd_cac = fields.Monetary(
+        string="Est. Customer Acquisition Cost (CAC)",
+        currency_field='company_currency',
+        tracking=True,
+        help="Estimated cost to acquire this customer (Planned P3/P4)."
+    )
+    jtbd_ltv_cac_ratio = fields.Float(
+        string="LTV:CAC Ratio",
+        compute='_compute_ltv_cac_ratio',
+        store=True, # Store the calculation
+        readonly=True,
+        aggregator='avg',
+        tracking=True,
+        help="Estimated Lifetime Value to Customer Acquisition Cost ratio (LTV based on Expected Revenue for now)."
+    )
+
+    # --- NEW Computed field for latest impact ---
+    jtbd_latest_economic_impact = fields.Monetary(
+        string="Latest Est. Economic Impact",
+        compute='_compute_latest_economic_impact',
+        currency_field='company_currency', # Use lead's company currency
+        store=False, # No need to store, compute on demand
+        readonly=True,
+        help="Displays the Estimated Economic Impact from the most recent Outcome Map linked to this opportunity."
+    )
+
+    # --- End Economic Analysis Fields ---
+    
+    # --- Decision Analysis Fields (PRD3 Phase 3) ---
+    jtbd_decision_authority = fields.Selection(
+        [('economic', 'Economic Buyer'),
+        ('champion', 'Champion'),
+        ('influencer', 'Influencer'),
+        ('technical', 'Technical Buyer/Gatekeeper'),
+        ('user', 'End User'),
+        ('multiple', 'Multiple/Committee'),
+        ('unknown', 'Unknown')],
+        string="Decision Authority Type",
+        tracking=True,
+        help="Primary role of the key contact(s) in the decision process."
+    )
+    # Using Text for forecast initially, can be M2M to tags/objection model later
+    jtbd_objection_forecast = fields.Text(
+        string="Objection Forecast",
+        tracking=True,
+        help="Anticipated objections or hurdles based on job, forces, or past experience."
+    )
+    # --- End Decision Analysis Fields ---
+    
+    # --- ML Attribution Placeholder Field (PRD3 Phase 2/3 Foundation) ---
+    jtbd_attribution_summary = fields.Text(
+        string="Attribution Summary (ML)",
+        readonly=True, # Populated by external system/future logic
+        copy=False,
+        tracking=True,
+        help="Placeholder field to store a summary or key results from the external ML-driven attribution model (Future Integration)."
+    )
+    # --- End ML Attribution Field ---
+    
+    # --- Relationship Health Fields (PRD3 Phase 3) ---
+    jtbd_relationship_health_score = fields.Integer(
+        string="Relationship Health Score",
+        tracking=True,
+        aggregator='avg',
+        help="Overall score (0-100) assessing the health and strength of the client relationship (manual or computed later)."
+    )
+    jtbd_knowledge_transfer_status = fields.Selection(
+        [('na', 'N/A'),
+        ('pending', 'Pending'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+        ('blocked', 'Blocked')],
+        string="Knowledge Transfer Status",
+        tracking=True,
+        default='na',
+        help="Status of knowledge transfer activities required for this opportunity or related project."
+    )
+    # --- End Relationship Health Fields ---
+    
+    # --- Campaign/Content Fields (PRD3 Phase 3) ---
+    jtbd_engagement_quality = fields.Integer(
+        string="Engagement Quality Score",
+        tracking=True,
+        aggregator='avg',
+        help="Score (0-100) representing the quality and depth of prospect engagement with marketing/sales content (manual or computed later)."
+    )
+    jtbd_content_approval_state = fields.Selection(
+        [('na', 'N/A'),
+        ('draft', 'Draft'),
+        ('pending_review', 'Pending Review'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected')],
+        string="Content Approval State",
+        tracking=True,
+        default='na',
+        index=True,
+        help="Approval status for key content pieces related to this opportunity (e.g., proposal, SOW)."
+    )
+    jtbd_content_alignment = fields.Float(
+        string="Content Alignment (%)",
+        tracking=True,
+        aggregator='avg',
+        digits=(16, 1), # Optional: Use digits for precision like (3, 1) for 95.5%
+        help="Assessed score (0-100) of how well presented content aligns with the identified Job-to-be-Done."
+    )
+    # --- End Campaign/Content Fields ---
+    
+    # --- Client Operations Field (PRD3 Phase 3) ---
+    jtbd_delivery_model = fields.Selection(
+        [('project', 'Project-Based'),
+        ('retainer', 'Retainer'),
+        ('hybrid', 'Hybrid (Project + Retainer)'),
+        ('productized', 'Productized Service'),
+        ('other', 'Other'),
+        ('tbd', 'To Be Determined')],
+        string="Delivery Model",
+        tracking=True,
+        default='tbd',
+        help="The intended or primary service delivery model for this opportunity."
+    )
+    # --- End Client Operations Field ---
+    
+    # --- Partner Ecosystem Field (PRD3 Phase 3) ---
+    jtbd_ecosystem_impact = fields.Selection(
+        [('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+        ('none', 'None / Not Applicable')],
+        string="Partner Ecosystem Impact",
+        tracking=True,
+        default='none',
+        help="Assessment of this opportunity's impact on or potential involvement with the partner ecosystem."
+    )
+    # --- End Partner Ecosystem Field ---
+
+    # --- Cultural Fit Fields (PRD3 Phase 3) ---
+    jtbd_innovation_profile = fields.Selection(
+        [('innovator', 'Innovator / Early Adopter'),
+        ('early_majority', 'Early Majority / Pragmatist'),
+        ('late_majority', 'Late Majority / Conservative'),
+        ('laggard', 'Laggard / Skeptic'),
+        ('unknown', 'Unknown')],
+        string="Innovation Profile",
+        tracking=True,
+        help="Assessment of the client's general approach to adopting new technologies or processes."
+    )
+    jtbd_values_alignment = fields.Integer(
+        string="Values Alignment Score",
+        tracking=True,
+        aggregator='avg',
+        help="Score (0-100) representing the perceived alignment of cultural values between the agency and the client."
+    )
+    # --- End Cultural Fit Fields ---
+    
+    # --- Buying Process Fields (PRD3 Phase 3) ---
+    jtbd_procurement_complexity = fields.Selection(
+        [('low', 'Low (Simple Purchase Order / Direct)'),
+        ('medium', 'Medium (Multiple Approvals / Standard Terms)'),
+        ('high', 'High (Formal RFP / Legal Review / Lengthy)'),
+        ('unknown', 'Unknown')],
+        string="Procurement Complexity",
+        tracking=True,
+        help="Assessment of the complexity of the client's purchasing/procurement process."
+    )
+    jtbd_trigger_cadence = fields.Selection(
+        [('immediate', 'Immediate Action'),
+        ('daily', 'Daily Check-in'),
+        ('weekly', 'Weekly Follow-up'),
+        ('monthly', 'Monthly Nurture'),
+        ('event_driven', 'Event-Driven Only'),
+        ('on_hold', 'On Hold')],
+        string="Recommended Cadence",
+        tracking=True,
+        help="Recommended outreach frequency based on triggers and buying stage."
+    )
+    # --- End Buying Process Fields ---
+    
+    # --- Market Intelligence Field (PRD3 Phase 3) ---
+    jtbd_intent_signals = fields.One2many(
+        'jtbd.intent.signal', # Related model
+        'lead_id', # Inverse field on the related model
+        string="Intent Signals",
+        help="Collected intent signals related to this lead/opportunity."
+    )
+    # --- End Market Intelligence Field ---
+    
+    # --- Job Evolution Relation (PRD3 Phase 3) ---
+    jtbd_evolution_ids = fields.One2many(
+        'jtbd.job.evolution', # Related model
+        'lead_id', # Inverse field on the related model
+        string="Job Evolution History",
+        help="History tracking changes or evolution of the client's Job-to-be-Done over time."
+    )
+    # --- End Job Evolution Relation ---
+
+    # --- Job Portfolio Relation (PRD3 Phase 3) ---
+    jtbd_portfolio_ids = fields.One2many(
+        'jtbd.job.portfolio', # Related model
+        'lead_id', # Inverse field on the related model
+        string="Job Portfolios",
+        help="Analyses of the multiple jobs potentially associated with this opportunity."
+    )
+    jtbd_portfolio_count = fields.Integer(compute='_compute_jtbd_analysis_counts', string="# Job Portfolios") # Add counter
+    # --- End Job Portfolio Relation ---
+    
+    # --- Privacy / Anonymization Foundation Fields (PRD3 Phase 1/3) ---
+    jtbd_privacy_consent_level = fields.Selection(
+        [('none', 'None Provided'),
+        ('basic', 'Basic Usage'),
+        ('analytics', 'Analytics Allowed'),
+        ('ai_processing', 'AI Processing Allowed')],
+        string="Privacy Consent Level",
+        default='none',
+        tracking=True,
+        copy=False,
+        help="Indicates the level of consent obtained for processing related JTBD data."
+    )
+    jtbd_is_anonymized = fields.Boolean(
+        string="Is Anonymized?",
+        default=False,
+        copy=False,
+        readonly=True, # Typically set by an automated process later
+        tracking=True,
+        help="Indicates if sensitive/PII data related to this record's JTBD analysis has been anonymized."
+    )
+    # --- End Privacy / Anonymization Fields ---
+
+    # --- Compute Methods ---
+    @api.depends('jtbd_job_statement', 'jtbd_job_category', 'jtbd_job_quadrant')
+    def _compute_job_clarity_score(self):
+        """ Compute the job clarity score based on statement structure and completeness. """
+        pattern = re.compile(r"when\s+(.*?)(?:,\s*|\s+)i want to\s+(.*?)(?:,\s*|\s+)so i can\s+(.*?)(?:\.?\s*$)", re.IGNORECASE | re.DOTALL)
+        for lead in self:
+            score = 0
+            max_score = 100
+            component_weight = 25
+            selection_weight = 12.5
+            situation, motivation, outcome = '', '', ''
+
+            if lead.jtbd_job_statement:
+                match = pattern.match(lead.jtbd_job_statement.strip())
+                if match:
+                    situation = match.group(1).strip()
+                    motivation = match.group(2).strip()
+                    outcome = match.group(3).strip()
+
+            # Score text components based on minimum length
+            if situation and len(situation) >= MIN_TEXT_LENGTH_SCORE: score += component_weight
+            if motivation and len(motivation) >= MIN_TEXT_LENGTH_SCORE: score += component_weight
+            if outcome and len(outcome) >= MIN_TEXT_LENGTH_SCORE: score += component_weight
+
+            # Score selections
+            if lead.jtbd_job_category: score += selection_weight
+            if lead.jtbd_job_quadrant: score += selection_weight
+
+            lead.jtbd_job_clarity_score = min(max_score, int(round(score)))
+            
+    @api.depends('expected_revenue', 'jtbd_cac') # Depends on standard expected_revenue and our new CAC field
+    def _compute_ltv_cac_ratio(self):
+        for lead in self:
+            # Use expected_revenue as a proxy for LTV initially
+            # Requires jtbd_cac to be populated (manually or via integration later)
+            ltv = lead.expected_revenue
+            cac = lead.jtbd_cac
+
+            if cac and cac > 0 and ltv is not None: # Ensure CAC is positive and LTV exists
+                try:
+                    lead.jtbd_ltv_cac_ratio = ltv / cac
+                except ZeroDivisionError:
+                    lead.jtbd_ltv_cac_ratio = 0.0
+            else:
+                lead.jtbd_ltv_cac_ratio = 0.0 # Default to 0 if CAC is zero/missing or LTV is missing
+
+    # --- NEW Compute method for latest impact ---
+    @api.depends('jtbd_outcome_mapping_ids.jtbd_economic_impact_value', 'jtbd_outcome_mapping_ids.create_date')
+    def _compute_latest_economic_impact(self):
+        for lead in self:
+            # Find the latest outcome map with a value set
+            latest_map = self.env['jtbd.outcome.mapping'].search(
+                [('lead_id', '=', lead.id), ('jtbd_economic_impact_value', '!=', False)],
+                order='create_date desc, id desc', limit=1
+            )
+            lead.jtbd_latest_economic_impact = latest_map.jtbd_economic_impact_value if latest_map else 0.0
+
+    # Implement count calculation
+    def _compute_jtbd_analysis_counts(self):
+        """ Compute the number of related Force Analyses and Outcome Maps using search_count. """
+        # Uses search_count for simplicity and robustness in this version.
+        # Consider optimizing with read_group if performance becomes an issue with many related records.
+        force_model = self.env['jtbd.force.analysis']
+        outcome_model = self.env['jtbd.outcome.mapping']
+        portfolio_model = self.env['jtbd.job.portfolio']
+
+        for lead in self:
+            try:
+                lead.jtbd_force_analysis_count = force_model.search_count(
+                    [('lead_id', '=', lead.id)]
+                )
+                lead.jtbd_outcome_mapping_count = outcome_model.search_count(
+                    [('lead_id', '=', lead.id)]
+                )
+                lead.jtbd_portfolio_count = portfolio_model.search_count(
+                    [('lead_id', '=', lead.id)]
+                )
+                
+            except Exception as e:
+                # Log error but prevent compute method from failing entirely
+#                _logger.error(f"Error counting related records for lead {lead.id}: {e}", exc_info=True)
+                _logger.error(f"Error counting job portfolios for lead {lead.id}: {e}", exc_info=True)
+                lead.jtbd_force_analysis_count = 0
+                lead.jtbd_outcome_mapping_count = 0
+                lead.jtbd_portfolio_count = 0
+            
+
+    # --- Action Methods (Currently not called by standard buttons) ---
+    # These methods provide programmatic access to open related records.
+    # The stat buttons on the form view link directly to window actions via XML.
+    def action_open_jtbd_force_analysis(self):
+        """ Opens the Force Analysis view for this opportunity. """
+        # This method could be called from code, but the button uses the action ID directly.
+        self.ensure_one()
+        action = self.env['ir.actions.act_window']._for_xml_id('jtbd_odoo_crm.action_jtbd_force_analysis_lead')
+        action['domain'] = [('lead_id', '=', self.id)]
+        action['context'] = {'default_lead_id': self.id, 'search_default_lead_id': self.id}
+        return action
+
+    def action_open_jtbd_outcome_mapping(self):
+        """ Opens the Outcome Mapping view for this opportunity. """
+        # This method could be called from code, but the button uses the action ID directly.
+        self.ensure_one()
+        action = self.env['ir.actions.act_window']._for_xml_id('jtbd_odoo_crm.action_jtbd_outcome_mapping_lead')
+        action['domain'] = [('lead_id', '=', self.id)]
+        action['context'] = {
+            'default_lead_id': self.id,
+            'search_default_lead_id': self.id,
+            'default_job_category': self.jtbd_job_category, # Pass category
+            'default_name': _('Outcome Map for %s') % self.name,
+        }
+        return action
+    
+    def action_open_job_portfolios(self):
+        self.ensure_one()
+        action = self.env['ir.actions.act_window']._for_xml_id('jtbd_odoo_crm.action_jtbd_job_portfolio')
+        action['domain'] = [('lead_id', '=', self.id)]
+        action['context'] = {'default_lead_id': self.id, 'search_default_lead_id': self.id}
+        return action    
+    
+    # --- Foundational Profile/Tech/Source Fields (Aligned with PRD3 Phase 1 Req.) ---
+
+    # Agency Profile Fields
+    # These might require custom selection lists or configuration later
+    jtbd_agency_size = fields.Integer(
+        string="Agency Size (Employees)",
+        tracking=True,
+        help="Estimated number of employees at the agency."
+    )
+    jtbd_revenue_range = fields.Selection(
+        [('0-1m', 'Under $1M'),
+        ('1m-5m', '$1M - $5M'),
+        ('5m-10m', '$5M - $10M'),
+        ('10m-25m', '$10M - $25M'),
+        ('25m+', 'Over $25M'),
+        ('unknown', 'Unknown')],
+        string="Est. Revenue Range",
+        tracking=True,
+        help="Estimated annual revenue range."
+    )
+    jtbd_account_tier = fields.Selection(
+        [('strategic', 'Strategic'),
+        ('target', 'Target'),
+        ('watch', 'Watch'),
+        ('other', 'Other')],
+        string="Account Tier",
+        tracking=True,
+        help="Internal classification of the account's strategic importance."
+    )
+
+    # Technology Stack Fields
+    # Using simple Text for now; Phase 3 Integration might use M2M to a dedicated tech model
+    jtbd_current_tools = fields.Text(
+        string="Current Tools/Tech Stack",
+        tracking=True,
+        help="Notes on the primary tools (CRM, Marketing Auto, PM, etc.) the agency currently uses."
+    )
+    jtbd_tech_stack_match = fields.Float(
+        string="Tech Stack Match (%)",
+        tracking=True, aggregator='avg',
+        help="Initial assessment (0-100) of how well the prospect's tech stack aligns with potential solutions. (May be computed later)."
+    )
+
+    # Basic Marketing/Intent Fields
+    jtbd_automation_source = fields.Selection(
+        [('inbound', 'Inbound'),
+        ('outbound', 'Outbound'),
+        ('referral', 'Referral'),
+        ('partner', 'Partner'),
+        ('other', 'Other'),
+        ('unknown', 'Unknown')],
+        string="Lead Source Type",
+        tracking=True, index=True,
+        help="High-level source category of the lead/opportunity."
+    )
+
+    # jtbd_signal_strength field (populated by Force Analysis) covers the combined score for now.
+    # Detailed jtbd_intent_signals (One2many) planned for Phase 3/4.
+
+    # --- End of Foundational Profile/Tech/Source Fields ---
