@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Push Forces -->
+        <record id="cfd_push_fin_1" model="jtbd.common.force.description"><field name="name">Increasing costs with current approach</field><field name="force_type">push</field><field name="impact_area">financial</field></record>
+        <record id="cfd_push_fin_2" model="jtbd.common.force.description"><field name="name">Revenue loss due to inefficiency</field><field name="force_type">push</field><field name="impact_area">financial</field></record>
+        <record id="cfd_push_op_1" model="jtbd.common.force.description"><field name="name">Process bottlenecks causing delays</field><field name="force_type">push</field><field name="impact_area">operational</field></record>
+        <record id="cfd_push_op_2" model="jtbd.common.force.description"><field name="name">Team burnout from manual work</field><field name="force_type">push</field><field name="impact_area">operational</field></record>
+        <record id="cfd_push_comp_1" model="jtbd.common.force.description"><field name="name">Competitors gaining market share</field><field name="force_type">push</field><field name="impact_area">competitive</field></record>
+        <record id="cfd_push_pers_1" model="jtbd.common.force.description"><field name="name">Leadership frustration with status quo</field><field name="force_type">push</field><field name="impact_area">personal</field></record>
+        <record id="cfd_push_strat_1" model="jtbd.common.force.description"><field name="name">Growth targets impossible with current approach</field><field name="force_type">push</field><field name="impact_area">strategic</field></record>
+        <record id="cfd_push_risk_1" model="jtbd.common.force.description"><field name="name">Compliance failure risk with current system</field><field name="force_type">push</field><field name="impact_area">risk</field></record>
+
+        <!-- Pull Forces -->
+        <record id="cfd_pull_fin_1" model="jtbd.common.force.description"><field name="name">Potential to increase profit margins</field><field name="force_type">pull</field><field name="impact_area">financial</field></record>
+        <record id="cfd_pull_fin_2" model="jtbd.common.force.description"><field name="name">Reduced operational costs</field><field name="force_type">pull</field><field name="impact_area">financial</field></record>
+        <record id="cfd_pull_op_1" model="jtbd.common.force.description"><field name="name">Streamlined workflow efficiency</field><field name="force_type">pull</field><field name="impact_area">operational</field></record>
+        <record id="cfd_pull_op_2" model="jtbd.common.force.description"><field name="name">Better resource allocation</field><field name="force_type">pull</field><field name="impact_area">operational</field></record>
+        <record id="cfd_pull_comp_1" model="jtbd.common.force.description"><field name="name">Enhanced competitive positioning</field><field name="force_type">pull</field><field name="impact_area">competitive</field></record>
+        <record id="cfd_pull_pers_1" model="jtbd.common.force.description"><field name="name">Less stress for team members</field><field name="force_type">pull</field><field name="impact_area">personal</field></record>
+        <record id="cfd_pull_strat_1" model="jtbd.common.force.description"><field name="name">Alignment with long-term vision</field><field name="force_type">pull</field><field name="impact_area">strategic</field></record>
+        <record id="cfd_pull_risk_1" model="jtbd.common.force.description"><field name="name">Improved compliance posture</field><field name="force_type">pull</field><field name="impact_area">risk</field></record>
+
+        <!-- Anxiety Forces (New Type) -->
+        <record id="cfd_anx_fin_1" model="jtbd.common.force.description"><field name="name">Fear of implementation costs / ROI uncertainty</field><field name="force_type">anxiety</field><field name="impact_area">financial</field></record>
+        <record id="cfd_anx_op_1" model="jtbd.common.force.description"><field name="name">Concern about disruption during transition</field><field name="force_type">anxiety</field><field name="impact_area">operational</field></record>
+        <record id="cfd_anx_op_2" model="jtbd.common.force.description"><field name="name">Worry about the learning curve for the team</field><field name="force_type">anxiety</field><field name="impact_area">operational</field></record>
+        <record id="cfd_anx_pers_1" model="jtbd.common.force.description"><field name="name">Fear of personal failure with new system</field><field name="force_type">anxiety</field><field name="impact_area">personal</field></record>
+        <record id="cfd_anx_risk_1" model="jtbd.common.force.description"><field name="name">Uncertainty about data migration risks</field><field name="force_type">anxiety</field><field name="impact_area">risk</field></record>
+        <record id="cfd_anx_strat_1" model="jtbd.common.force.description"><field name="name">Doubt about new solution's strategic fit</field><field name="force_type">anxiety</field><field name="impact_area">strategic</field></record>
+
+        <!-- Habit Forces (New Type) -->
+        <record id="cfd_hab_fin_1" model="jtbd.common.force.description"><field name="name">Sunk costs in existing solutions</field><field name="force_type">habit</field><field name="impact_area">financial</field></record>
+        <record id="cfd_hab_op_1" model="jtbd.common.force.description"><field name="name">Comfort/familiarity with existing processes/tools</field><field name="force_type">habit</field><field name="impact_area">operational</field></record>
+        <record id="cfd_hab_op_2" model="jtbd.common.force.description"><field name="name">Limited bandwidth for change / Change fatigue</field><field name="force_type">habit</field><field name="impact_area">operational</field></record>
+        <record id="cfd_hab_pers_1" model="jtbd.common.force.description"><field name="name">Team resistance to new ways of working</field><field name="force_type">habit</field><field name="impact_area">personal</field></record>
+        <record id="cfd_hab_risk_1" model="jtbd.common.force.description"><field name="name">Existing vendor relationships / Contracts</field><field name="force_type">habit</field><field name="impact_area">risk</field></record>
+        <record id="cfd_hab_strat_1" model="jtbd.common.force.description"><field name="name">"Good enough" perception of current approach</field><field name="force_type">habit</field><field name="impact_area">strategic</field></record>
+    </data>
+</odoo>
