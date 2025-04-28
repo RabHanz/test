@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_jtbd_outcome_template_wizard_form" model="ir.ui.view">
+            <field name="name">jtbd.outcome.template.wizard.form</field>
+            <field name="model">jtbd.outcome.template.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Select Outcome Template">
+                    <group>
+                        <field name="mapping_id" invisible="1"/>
+                        <field name="mapping_job_category_id" invisible="1"/>
+                        <!-- Ensure no_create is true to prevent users creating patterns here -->
+                        <field name="template_id" options="{'no_create': True, 'no_quick_create': True}"
+                               context="{'search_default_job_category_id': mapping_job_category_id}"/>
+                    </group>
+                    <footer>
+                        <button name="action_apply_template" string="Apply Template" type="object" class="btn-primary"/>
+                        <button special="cancel" string="Cancel" class="btn-secondary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+         <!-- Action definition (though usually called from Python) -->
+        <record id="action_jtbd_outcome_template_wizard" model="ir.actions.act_window">
+            <field name="name">Select Outcome Template</field>
+            <field name="res_model">jtbd.outcome.template.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_jtbd_outcome_template_wizard_form"/>
+        </record>
+    </data>
+</odoo>
