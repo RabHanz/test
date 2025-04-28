@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_jtbd_job_statement_builder_form" model="ir.ui.view">
+            <field name="name">jtbd.job.statement.builder.form</field>
+            <field name="model">jtbd.job.statement.builder</field>
+            <field name="arch" type="xml">
+                <form string="JTBD Statement Builder" disable_autofocus="1">
+                    <header>
+                        <!-- Wizard Navigation Buttons -->
+                        <button name="action_get_ai_suggestions" type="object" string="Get AI Suggestions" icon="fa-magic" class="btn-secondary" help="Get AI-powered suggestions to improve or complete the current section based on context."
+                                invisible="state == 'review'"/>
+                        <button name="action_next" string="Next" type="object" class="btn-primary"
+                                invisible="state == 'review'"/>
+                        <button name="action_back" string="Back" type="object" class="btn-secondary"
+                                invisible="state == 'situation'"/>
+                        <!-- Save Button on Review Step -->
+                        <button name="action_save" string="Save Job Statement" type="object" class="btn-primary"
+                                invisible="state != 'review'"/>
+                        <!-- Status Bar -->
+                        <field name="state" widget="statusbar" statusbar_visible="situation,motivation,outcome,review"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title mb-2">
+                            <h1>
+                                Opportunity: <field name="lead_id" readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                            </h1>
+                        </div>
+
+                        <!-- Invisible fields needed for invisible/attrs evaluation -->
+                        <field name="display_situation_templates" invisible="1"/>
+                        <field name="display_motivation_templates" invisible="1"/>
+                        <field name="display_outcome_templates" invisible="1"/>
+
+                        <!-- Job Statement Preview -->
+                        <div class="alert alert-info mb-3" role="status">
+                             <group>
+                                 <label for="job_situation" string="When" class="fw-bold o_text_info"/>
+                                 <field name="job_situation" nolabel="1" readonly="1" placeholder="..." class="oe_inline"/>
+
+                                 <label for="job_motivation" string="I want to" class="fw-bold o_text_info"/>
+                                 <field name="job_motivation" nolabel="1" readonly="1" placeholder="..." class="oe_inline"/>
+
+                                 <label for="job_outcome" string="So I can" class="fw-bold o_text_info"/>
+                                 <field name="job_outcome" nolabel="1" readonly="1" placeholder="..." class="oe_inline"/>
+                             </group>
+                        </div>
+
+                        <!-- Wizard Steps Content -->
+                        <div class="oe_form_sheet_width">
+
+                            <!-- Situation Step -->
+                            <div invisible="state != 'situation'">
+                                <h2 class="mt-2">Step 1: Define the Situation</h2>
+                                <p class="text-muted">Describe the specific circumstances that trigger the need. When does the agency face this challenge?</p>
+                                <group>
+                                    <group>
+                                        <field name="job_category_id" widget="radio" options="{'horizontal': False, 'no_create': True}"/>
+                                    </group>
+                                    <group>
+                                        <field name="suggested_patterns" widget="many2many_tags" readonly="1" options="{'no_create_edit': True}"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <field name="job_situation" placeholder="e.g., 'When onboarding new clients without a standard process...'"/>
+                                </group>
+                                <div class="o_horizontal_separator mt-4 mb-3 text-muted">Common Situations (Click to use)</div>
+                                <div class="row" invisible="display_situation_templates == False">
+                                    <div class="col-sm-6 col-md-4 mb-2">
+                                        <button name="use_template" type="object" class="btn btn-sm btn-outline-secondary w-100 text-start" context="{'template_type': 'situation', 'template_text': 'When trying to scale operations without adding headcount'}">
+                                            <i class="fa fa-lightbulb-o me-1" title="Use Template"/> When trying to scale operations without adding headcount
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4 mb-2">
+                                        <button name="use_template" type="object" class="btn btn-sm btn-outline-secondary w-100 text-start" context="{'template_type': 'situation', 'template_text': 'When pitching to prospective clients in a competitive market'}">
+                                             <i class="fa fa-lightbulb-o me-1" title="Use Template"/> When pitching to prospective clients...
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4 mb-2">
+                                        <button name="use_template" type="object" class="btn btn-sm btn-outline-secondary w-100 text-start" context="{'template_type': 'situation', 'template_text': 'When managing multiple client projects simultaneously'}">
+                                            <i class="fa fa-lightbulb-o me-1" title="Use Template"/> When managing multiple client projects...
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Motivation Step -->
+                            <div invisible="state != 'motivation'">
+                                 <h2 class="mt-2">Step 2: Describe the Motivation</h2>
+                                <p class="text-muted">What does the agency want to accomplish or change in that situation?</p>
+                                <group>
+                                    <field name="job_motivation" placeholder="e.g., 'streamline our client reporting process...'"/>
+                                </group>
+                                <div class="o_horizontal_separator mt-4 mb-3 text-muted">Common Motivations (Click to use)</div>
+                                 <div class="row" invisible="display_motivation_templates == False">
+                                    <div class="col-sm-6 col-md-4 mb-2">
+                                        <button name="use_template" type="object" class="btn btn-sm btn-outline-secondary w-100 text-start" context="{'template_type': 'motivation', 'template_text': 'reduce manual data entry and errors'}">
+                                             <i class="fa fa-lightbulb-o me-1" title="Use Template"/> reduce manual data entry and errors
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4 mb-2">
+                                        <button name="use_template" type="object" class="btn btn-sm btn-outline-secondary w-100 text-start" context="{'template_type': 'motivation', 'template_text': 'differentiate our agency from competitors'}">
+                                             <i class="fa fa-lightbulb-o me-1" title="Use Template"/> differentiate our agency from competitors
+                                        </button>
+                                    </div>
+                                     <div class="col-sm-6 col-md-4 mb-2">
+                                        <button name="use_template" type="object" class="btn btn-sm btn-outline-secondary w-100 text-start" context="{'template_type': 'motivation', 'template_text': 'improve team utilization rates'}">
+                                             <i class="fa fa-lightbulb-o me-1" title="Use Template"/> improve team utilization rates
+                                        </button>
+                                    </div>
+                                 </div>
+                            </div>
+
+                            <!-- Outcome Step -->
+                            <div invisible="state != 'outcome'">
+                                 <h2 class="mt-2">Step 3: Define the Expected Outcome</h2>
+                                <p class="text-muted">What successful result or benefit does the agency expect to achieve?</p>
+                                <group>
+                                    <group>
+                                        <field name="job_quadrant" widget="radio" options="{'horizontal': False}"/>
+                                    </group>
+                                    <group/>
+                                </group>
+                                <group>
+                                    <field name="job_outcome" placeholder="e.g., 'focus more time on strategic client work...'"/>
+                                </group>
+                                <div class="o_horizontal_separator mt-4 mb-3 text-muted">Common Outcomes (Click to use)</div>
+                                 <div class="row" invisible="display_outcome_templates == False">
+                                    <div class="col-sm-6 col-md-4 mb-2">
+                                        <button name="use_template" type="object" class="btn btn-sm btn-outline-secondary w-100 text-start" context="{'template_type': 'outcome', 'template_text': 'increase our profit margins'}">
+                                             <i class="fa fa-lightbulb-o me-1" title="Use Template"/> increase our profit margins
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4 mb-2">
+                                        <button name="use_template" type="object" class="btn btn-sm btn-outline-secondary w-100 text-start" context="{'template_type': 'outcome', 'template_text': 'win more business and grow faster'}">
+                                             <i class="fa fa-lightbulb-o me-1" title="Use Template"/> win more business and grow faster
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4 mb-2">
+                                        <button name="use_template" type="object" class="btn btn-sm btn-outline-secondary w-100 text-start" context="{'template_type': 'outcome', 'template_text': 'deliver more consistent client results'}">
+                                             <i class="fa fa-lightbulb-o me-1" title="Use Template"/> deliver more consistent client results
+                                        </button>
+                                    </div>
+                                 </div>
+                            </div>
+
+                            <!-- Review Step -->
+                            <div invisible="state != 'review'">
+                                 <h2 class="mt-2">Step 4: Review Job Statement</h2>
+                                <p class="text-muted">Please review the complete job statement and associated details before saving.</p>
+                                <group>
+                                    <group>
+                                        <field name="job_category_id" readonly="1"/>
+                                        <field name="job_quadrant" readonly="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="jtbd_job_clarity_score" widget="percentpie" options="{'editable': false}"/>
+                                    </group>
+                                </group>
+
+                                <div class="o_horizontal_separator mt-4 mb-3 text-muted">Complete Job Statement</div>
+                                <!-- Review Section - RESTRUCTURED -->
+                                <div class="o_form_sheet bg-light p-3 mb-4">
+                                    <group>
+                                         <label for="job_situation" string="When" class="fw-bold text-primary"/>
+                                         <field name="job_situation" nolabel="1" readonly="1" class="text-break"/>
+
+                                         <label for="job_motivation" string="I want to" class="fw-bold text-primary"/>
+                                         <field name="job_motivation" nolabel="1" readonly="1" class="text-break"/>
+
+                                         <label for="job_outcome" string="So I can" class="fw-bold text-primary"/>
+                                         <field name="job_outcome" nolabel="1" readonly="1" class="text-break"/>
+                                     </group>
+                                </div>
+
+                                <div class="o_horizontal_separator mt-4 mb-3 text-muted">Suggested Related Patterns</div>
+                                <field name="suggested_patterns" widget="many2many_tags" readonly="1" options="{'no_create_edit': True}"/>
+                            </div>
+
+                        </div> <!-- End oe_form_sheet_width -->
+                    </sheet>
+                    <footer>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action to launch the Job Statement Builder Wizard -->
+        <record id="action_jtbd_job_statement_builder_wizard" model="ir.actions.act_window">
+            <field name="name">Build Job Statement</field>
+            <field name="res_model">jtbd.job.statement.builder</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_jtbd_job_statement_builder_form"/>
+            <field name="context">{'default_lead_id': active_id, 'default_job_category_id': context.get('jtbd_job_category_id'), 'default_job_quadrant': context.get('jtbd_job_quadrant')}</field>
+             <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Launch the wizard from an Opportunity record.
+              </p><p>
+                This wizard helps you build a structured Job-to-be-Done statement.
+              </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>
