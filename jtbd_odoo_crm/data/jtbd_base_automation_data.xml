@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Pseudo/Placeholder Automation Rule (Load First) -->
+        <record id="auto_placeholder_jtbd_load_order_fix" model="base.automation">
+            <field name="name">JTBD - Placeholder (Ignore)</field>
+            <field name="model_id" ref="base.model_res_partner"/> <!-- Use a common model -->
+            <field name="active" eval="False"/> <!-- Keep it inactive -->
+            <field name="trigger">on_create</field> <!-- Simple trigger -->
+            <!-- No server action linked -->
+        </record>
+
+        <!-- Automation Rule: Trigger Log Job Evolution on Lead Update -->
+        <record id="auto_log_job_evolution_on_lead_update" model="base.automation">
+            <field name="name">JTBD - Trigger: Log Job Evolution on Lead Update</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_write</field>
+            <field name="trigger_field_ids" eval="[
+                (4, ref('crm.field_crm_lead__stage_id')),
+                (4, ref('jtbd_odoo_crm.field_crm_lead__jtbd_job_statement')),
+                (4, ref('jtbd_odoo_crm.field_crm_lead__jtbd_job_category_id')),
+                (4, ref('jtbd_odoo_crm.field_crm_lead__jtbd_job_quadrant'))
+                ]"/>
+            <field name="action_server_ids" eval="[(4, ref('jtbd_odoo_crm.server_action_log_job_evolution'))]"/>
+        </record>
+
+        <!-- Automation Rule: Trigger Log Content Alignment Check Needed -->
+        <record id="auto_log_content_alignment_check" model="base.automation">
+            <field name="name">JTBD - Trigger: Log Content Alignment Check Needed</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_write</field>
+            <field name="trigger_field_ids" eval="[(4, ref('jtbd_odoo_crm.field_crm_lead__jtbd_content_approval_state'))]"/>
+            <field name="action_server_ids" eval="[(4, ref('jtbd_odoo_crm.server_action_log_content_alignment_check'))]"/>
+        </record>
+
+        <!-- Automation Rule: Trigger Simulate Webhook on Force Analysis Update -->
+        <record id="auto_simulate_webhook_force_analysis" model="base.automation">
+            <field name="name">JTBD - Trigger: Simulate Webhook on Force Analysis Update</field>
+            <field name="model_id" ref="jtbd_odoo_crm.model_jtbd_force_analysis"/>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_write</field>
+             <field name="trigger_field_ids" eval="[
+                (4, ref('jtbd_odoo_crm.field_jtbd_force_analysis__momentum_score')),
+                (4, ref('jtbd_odoo_crm.field_jtbd_force_analysis__signal_strength')),
+                (4, ref('jtbd_odoo_crm.field_jtbd_force_analysis__trigger_window'))
+                ]"/>
+             <field name="action_server_ids" eval="[(4, ref('jtbd_odoo_crm.server_action_simulate_webhook_force_analysis'))]"/>
+        </record>
+
+    </data>
+</odoo>

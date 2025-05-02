@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Server Action: Python Code to Log Job Evolution -->
+        <record id="server_action_log_job_evolution" model="ir.actions.server">
+            <field name="name">JTBD - Code: Log Job Evolution</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">
+# Available variables: env, model, records, record, log, time, datetime, dateutil, timezone, workflow
+# 'record' is the crm.lead record being updated
+if record:
+    log(f"JTBD Evolution Triggered for Lead: {record.name} (ID: {record.id}) due to update.")
+    try:
+        # Prepare state descriptions using the new M2O field name
+        # prev_state_desc = f"State before current update trigger." # Simplified previous state
+        # More robustly get category name, handling None case
+        prev_category_name = record.jtbd_job_category_id.name if record.jtbd_job_category_id else 'N/A'
+        prev_state_desc = f"Snapshot Approx: Stage={record.stage_id.name}, Category={prev_category_name}"
+        # Use category name in new state description as well
+        new_category_name = record.jtbd_job_category_id.name if record.jtbd_job_category_id else 'N/A'
+        new_state_desc = f"Current State: Stage={record.stage_id.name}, Category={new_category_name}, Statement Excerpt='{record.jtbd_job_statement[:100] if record.jtbd_job_statement else ''}...'"
+
+        # Ensure datetime objects are available
+        now_aware_utc = datetime.datetime.now(timezone('UTC'))
+        now_naive_utc = now_aware_utc.replace(tzinfo=None)
+        # Create the evolution record
+        evo_vals = {
+            'lead_id': record.id,
+            'change_date': now_naive_utc, # Use the naive UTC datetime
+            'previous_state_description': prev_state_desc,
+            'new_state_description': new_state_desc,
+            'transition_trigger': 'Lead Fields Updated (Stage, Statement, Category, Quadrant)',
+            'user_id': env.user.id,
+        }
+        new_evo = env['jtbd.job.evolution'].create(evo_vals)
+        log(f"Created jtbd.job.evolution record {new_evo.id} for Lead {record.id}")
+        # --- Phase 4 Placeholder: Trigger external analysis? ---
+        # payload = {'evolution_id': new_evo.id, 'lead_data': record.read([...fields...])[0]}
+        # log(f"Simulating webhook call for Job Evolution: {payload}")
+        # --- End Placeholder ---
+    except Exception as e:
+        log(f"Error creating Job Evolution record for Lead {record.id}: {e}", level='error')
+            </field>
+        </record>
+
+        <!-- Server Action: Python Code to Log Content Alignment Check -->
+        <record id="server_action_log_content_alignment_check" model="ir.actions.server">
+            <field name="name">JTBD - Code: Log Content Alignment Check</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">
+# Ensure record exists before accessing fields
+if record and record.jtbd_content_approval_state in ('approved', 'rejected', 'pending_review'):
+    log(f"JTBD Content Alignment Check Triggered for Lead: {record.name} (ID: {record.id}). Approval State: {record.jtbd_content_approval_state}")
+    msg = f"Content Approval State changed to '{record.jtbd_content_approval_state}'. Review Content Alignment scores and potentially trigger content updates."
+    record.message_post(body=msg, subtype_id=env.ref('mail.mt_note').id)
+    # --- Phase 4 Placeholder: Trigger external Content Brain action ---
+    # payload = {'lead_id': record.id, 'approval_state': record.jtbd_content_approval_state}
+    # log(f"Simulating webhook call for Content Approval State change: {payload}")
+    # --- End Placeholder ---
+elif record: # Add else if record exists but state doesn't match
+     log(f"JTBD Content Alignment Check Skipped for Lead: {record.name} (State: {record.jtbd_content_approval_state})")
+else:
+     log("JTBD Content Alignment Check Skipped: No record found.", level="warning")
+            </field>
+        </record>
+
+        <!-- Server Action: Python Code to Simulate Webhook -->
+        <record id="server_action_simulate_webhook_force_analysis" model="ir.actions.server">
+            <field name="name">JTBD - Code: Simulate Webhook on Force Analysis Update</field>
+            <field name="model_id" ref="jtbd_odoo_crm.model_jtbd_force_analysis"/>
+            <field name="state">code</field>
+            <field name="code">
+# Simulate calling an external webhook (e.g., n8n) when key scores change
+# Ensure record and record.lead_id exist
+if record and record.lead_id:
+    log(f"JTBD Webhook Triggered: Force Analysis {record.name} (ID: {record.id}) updated.")
+    # Prepare a more realistic payload
+    payload = {
+        'source': 'odoo_jtbd_force_analysis_update',
+        'analysis_id': record.id,
+        'analysis_name': record.name,
+        'lead_id': record.lead_id.id,
+        'lead_name': record.lead_id.name,
+        # Ensure datetime and timezone objects are available
+        'timestamp_utc': datetime.datetime.now(timezone('UTC')).isoformat() + 'Z',
+        'scores': {
+            'momentum': record.momentum_score,
+            'signal': record.signal_strength,
+            'push': record.push_score,
+            'pull': record.pull_score,
+            'anxiety': record.anxiety_score,
+            'habit': record.habit_score,
+        },
+        'trigger_window': record.trigger_window,
+        'intensity': record.intensity_score,
+        'contract_loss': record.contract_loss,
+        'updated_by_user_id': env.user.id
+    }
+    log(f"Simulated Webhook Payload Prepared: {payload}")
+    # --- Phase 4: Placeholder for actual HTTP POST request ---
+    # ... (webhook simulation logic) ...
+    # --- End Placeholder ---
+    record.message_post(body=f"Force Analysis update detected. Simulated trigger sent.", subtype_id=env.ref('mail.mt_note').id)
+elif record:
+    log(f"Skipping webhook simulation for FA {record.id}: Missing Lead ID.", level='warning')
+else:
+    log("Webhook simulation skipped: No record found.", level="warning")
+            </field>
+        </record>
+
+        <!-- Server Action: Simulate Triggering AI Personalization -->
+        <record id="server_action_trigger_ai_personalization" model="ir.actions.server">
+            <field name="name">JTBD - Code: Trigger AI Personalization Suggestion</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">
+# Available variables: env, model, records, record, log, ...
+if record:
+    log(f"JTBD Placeholder Trigger: AI Personalization generation requested for Lead {record.id} - {record.name}.")
+    # --- Phase 4: Prepare context ---
+    # Use category name from the new M2O field
+    context_data = {
+        'lead_id': record.id,
+        'job_category': record.jtbd_job_category_id.name if record.jtbd_job_category_id else '', # Get name from M2O
+        'job_statement': record.jtbd_job_statement or '',
+        'force_momentum': record.jtbd_momentum_score or 0, # Handle potential None
+        'outcome_metric': record.jtbd_outcome_metric or ''
+    }
+    log(f"Simulated context for AI personalization: {context_data}")
+    # --- Phase 4: Call external n8n/AI endpoint ---
+    # ... (AI call simulation logic) ...
+    result_text = "AI Suggestion: Focus on ROI impact based on outcome metric '%s'." % context_data['outcome_metric'] if context_data['outcome_metric'] else "AI Suggestion: Emphasize alignment with strategic goals."
+    # --- Phase 4: Update Odoo field ---
+    # record.write({'jtbd_ai_personalized_messaging_angles': result_text}) # Uncomment when ready
+    record.message_post(body=f"AI Personalization Triggered (Simulated). Suggestion: {result_text}", subtype_id=env.ref('mail.mt_note').id)
+else:
+    log("AI Personalization skipped: No record found.", level="warning")
+
+            </field>
+        </record>
+    </data>
+</odoo>
