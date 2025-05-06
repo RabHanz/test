@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- jtbd.outcome.pattern List View -->
+        <record id="view_jtbd_outcome_pattern_list" model="ir.ui.view">
+            <field name="name">jtbd.outcome.pattern.list</field>
+            <field name="model">jtbd.outcome.pattern</field>
+            <field name="arch" type="xml">
+                <list string="Outcome Patterns">
+                     <field name="sequence" widget="handle"/>
+                     <field name="name"/>
+                     <field name="job_category_id"/>
+                     <field name="primary_metric"/>
+                     <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- jtbd.outcome.pattern Form View -->
+        <record id="view_jtbd_outcome_pattern_form" model="ir.ui.view">
+            <field name="name">jtbd.outcome.pattern.form</field>
+            <field name="model">jtbd.outcome.pattern</field>
+            <field name="arch" type="xml">
+                <form string="Outcome Pattern">
+                    <sheet>
+                         <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                         <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="job_category_id" options="{'no_create': True}"/>
+                                <field name="active" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+                         <notebook>
+                            <page string="Outcome Templates">
+                                <group>
+                                    <field name="jtbd_source_type_applicability"/> 
+                                    <field name="primary_metric"/>
+                                    <field name="metric_unit_template"/>
+                                    <field name="is_percentage_template"/>
+                                    <field name="additional_metrics" placeholder="One metric template per line..."/>
+                                 </group>
+                             </page>
+                             <page string="Milestone Templates">
+                                 <group>
+                                     <field name="typical_milestone_1"/>
+                                     <field name="typical_milestone_2"/>
+                                     <field name="typical_milestone_3"/>
+                                 </group>
+                             </page>
+                             <page string="White Space Templates">
+                                <group>
+                                    <field name="white_space_suggestions" placeholder="One suggestion per line..."/>
+                                </group>
+                             </page>
+                             <page string="Notes">
+                                <field name="notes"/>
+                             </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+         <!-- jtbd.outcome.pattern Action Window -->
+         <record id="action_jtbd_outcome_pattern" model="ir.actions.act_window">
+             <field name="name">Outcome Patterns</field>
+             <field name="res_model">jtbd.outcome.pattern</field>
+             <field name="view_mode">list,form</field>
+             <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('view_jtbd_outcome_pattern_list')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_jtbd_outcome_pattern_form')})]"/>
+             <field name="help" type="html">
+               <p class="o_view_nocontent_smiling_face">
+                 Create a new Outcome Pattern
+               </p><p>
+                 Define common outcome metrics, milestones, and white space suggestions for specific job categories.
+               </p>
+             </field>
+         </record>
+
+         <!-- Menu Item for Outcome Patterns -->
+         <menuitem id="menu_jtbd_outcome_patterns"
+                   name="Outcome Patterns"
+                   parent="menu_jtbd_config"
+                   action="action_jtbd_outcome_pattern"
+                   sequence="15"/> <!-- Position after Job Patterns -->
+
+    </data>
+</odoo>

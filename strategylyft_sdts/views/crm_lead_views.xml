@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_lead_view_form_inherit_jtbd" model="ir.ui.view">
+            <field name="name">crm.lead.form.inherit.jtbd</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="%(jtbd_odoo_crm.action_jtbd_job_statement_builder_wizard)d" type="action" class="oe_stat_button" icon="fa-puzzle-piece" string="JTBD Builder" invisible="type != 'opportunity'" help="Launch the JTBD Statement Builder"/>
+                    <button name="%(jtbd_odoo_crm.action_jtbd_force_analysis_lead)d" type="action" class="oe_stat_button" icon="fa-balance-scale" invisible="type != 'opportunity'" help="View/create Force Analyses"> <field name="jtbd_force_analysis_count" widget="statinfo" string="Force Analyses"/> </button>
+                    <button name="%(jtbd_odoo_crm.action_jtbd_outcome_mapping_lead)d" type="action" class="oe_stat_button" icon="fa-bullseye" invisible="type != 'opportunity'" help="View/create Outcome Maps"> <field name="jtbd_outcome_mapping_count" widget="statinfo" string="Outcome Maps"/> </button>
+                    <button name="action_open_job_portfolios" type="object" class="oe_stat_button" icon="fa-briefcase" invisible="type != 'opportunity' or jtbd_portfolio_count == 0"> <field name="jtbd_portfolio_count" widget="statinfo" string="Job Portfolios"/> </button>
+                </xpath>
+
+                <!-- JTBD Tab Content -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="JTBD" name="jtbd_details">
+
+                        <!-- Group 1: Core Job Definition -->
+                        <group string="Job Definition &amp; Quality">
+                            <group>
+                                <field name="jtbd_job_category_id" options="{'no_create': True}"/>
+                                <field name="jtbd_job_quadrant"/>
+                            </group>
+                            <group>
+                                <field name="jtbd_job_clarity_score" widget="percentpie" readonly="1"/>
+                                <field name="jtbd_job_pattern_match_ids" widget="many2many_tags" options="{'no_create_edit': True}" readonly="1" decoration-success="True"/>
+                            </group>
+                            <field name="jtbd_job_statement" nolabel="1" placeholder="When [Situation], I want [Motivation], so I can [Outcome]..." widget="CopyClipboardText" class="text-break"/>
+                        </group>
+
+                        <!-- Group 2: Source & Progression -->
+                        <group string="Lead Source &amp; Status">
+                             <group>
+                                <field name="jtbd_automation_source"/>
+                                <field name="jtbd_data_source_label"/>
+                                <field name="jtbd_source_interaction_tags" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                             </group>
+                             <group>
+                                <field name="jtbd_contact_progression_status"/>
+                                <field name="jtbd_source_confidence_score" widget="percentage" options="{'max_value': 1.0}"/>
+                            </group>
+                            <group string="Outreach Status &amp; Priority">
+                                <group>
+                                    <field name="jtbd_is_outbound_targeted"/>
+                                 </group>
+                                 <group>
+                                    <field name="jtbd_outreach_priority_score" readonly="1"/>
+                                    <field name="jtbd_suggested_sequence_id" readonly="1" placeholder="Sequence ID from external system..."/>
+                                 </group>
+
+                            </group>
+                        </group>
+
+                         <!-- Group 3: Agency Profile & Context -->
+                        <group string="Agency Profile &amp; Context">
+                            <group>
+                                <field name="jtbd_agency_size"/>
+                                <field name="jtbd_revenue_range"/>
+                                <field name="jtbd_account_tier"/>
+                                <field name="jtbd_competitive_position"/>
+                            </group>
+                            <group>
+                                <field name="jtbd_current_tools" placeholder="List key tools..."/>
+                                <field name="jtbd_tech_stack_match" widget="percentage"/>
+                                <field name="jtbd_innovation_profile"/>
+                                <field name="jtbd_values_alignment"/>
+                            </group>
+                        </group>
+
+                        <!-- Group 4: Analysis & Outcome Summaries (Read Only) -->
+                        <group string="JTBD Analysis Summary (Read Only)">
+                             <group>
+                                <field name="jtbd_momentum_score" widget="gauge" options="{'max_value': 100}"/>
+                                <field name="jtbd_signal_strength" widget="gauge" options="{'max_value': 100}"/>
+                                <field name="jtbd_latest_economic_impact" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                            </group>
+                             <group>
+                                <field name="jtbd_risk_level"/>
+                                <field name="jtbd_trigger_window"/>
+                                <field name="jtbd_contract_loss"/>
+                                <field name="jtbd_renewal_risk" widget="gauge" options="{'max_value': 100}" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="jtbd_outcome_metric"/>
+                                <field name="jtbd_white_space" placeholder="Expansion opportunities..."/>
+                                <field name="jtbd_attribution_summary" placeholder="Populated by ML Attribution System..." readonly="1" widget="ace" options="{'mode': 'json'}" colspan="2"/>
+                            </group>
+                        </group>
+
+                         <!-- Group 5: Deal & Buying Process -->
+                        <group string="Deal &amp; Buying Process Context">
+                             <group>
+                                <field name="jtbd_decision_authority"/>
+                                <field name="jtbd_procurement_complexity"/>
+                                <field name="jtbd_trigger_cadence"/>
+                             </group>
+                              <group>
+                                 <field name="jtbd_content_approval_state" widget="selection"/>
+                                 <field name="jtbd_content_alignment" widget="percentage"/>
+                                 <field name="jtbd_engagement_quality"/>
+                              </group>
+                              <field name="jtbd_objection_forecast" placeholder="Anticipated objections..."/>
+                        </group>
+
+                        <!-- Group 6: Relationship & Delivery -->
+                         <group string="Relationship &amp; Delivery Context">
+                            <group>
+                                <field name="jtbd_relationship_health_score"/>
+                                <field name="jtbd_response_pattern"/>
+                                <field name="jtbd_comms_effectiveness"/>
+                                <field name="jtbd_ecosystem_impact"/>
+                                <field name="jtbd_partner_influence"/>
+                             </group>
+                            <group>
+                                <field name="jtbd_knowledge_transfer_status"/>
+                                <field name="jtbd_delivery_model"/>
+                                <field name="jtbd_privacy_consent_level"/>
+                                <field name="jtbd_is_anonymized" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <!-- Section 7: Related JTBD Records -->
+                        <group string="Related JTBD Records">
+                            <notebook>
+                               <page string="Intent Signals" name="related_intent_signals">
+                                   <field name="jtbd_intent_signals" nolabel="1" readonly="1"><list decoration-muted="score&lt;4" decoration-info="score&gt;=4 and score&lt;7" decoration-warning="score&gt;=7"><field name="timestamp" widget="datetime" string="Date"/><field name="signal_type"/><field name="source"/><field name="activity"/><field name="topic"/><field name="score"/></list></field>
+                               </page>
+                               <page string="Outbound Engagement" name="related_outbound_engagement">
+                                   <field name="jtbd_outbound_engagement_ids" nolabel="1" readonly="1">
+                                       <list create="false">
+                                           <field name="engagement_datetime"/>
+                                           <field name="channel"/>
+                                           <field name="summary"/>
+                                           <field name="response_type" widget="badge"/>
+                                           <field name="user_id" widget="many2one_avatar_user"/>
+                                       </list>
+                                   </field>
+                               </page>
+                               <page string="Unified Journey" name="related_journey_events">
+                                   <field name="jtbd_unified_journey_event_ids" nolabel="1" readonly="1">
+                                       <list create="false">
+                                           <field name="event_datetime" string="Date"/>
+                                           <field name="event_type"/>
+                                           <field name="source_system"/>
+                                           <field name="channel"/>
+                                           <field name="description"/>
+                                       </list>
+                                   </field>
+                               </page>
+                               <page string="Job Evolution" name="related_job_evolution">
+                                   <field name="jtbd_evolution_ids" nolabel="1" readonly="1"><list><field name="change_date" string="Date"/><field name="transition_trigger" string="Trigger"/><field name="user_id" widget="many2one_avatar_user"/></list></field>
+                               </page>
+                               <page string="Job Portfolios" name="related_job_portfolios">
+                                    <field name="jtbd_portfolio_ids" nolabel="1" readonly="1"><list><field name="display_name"/><field name="analysis_date"/><field name="analyst_id" widget="many2one_avatar_user"/></list></field>
+                                </page>
+                            </notebook>
+                       </group>
+
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

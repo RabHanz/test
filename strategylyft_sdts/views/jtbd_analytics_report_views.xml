@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- jtbd.pipeline.analysis Pivot View -->
+        <record id="view_jtbd_pipeline_analysis_pivot" model="ir.ui.view">
+            <field name="name">jtbd.pipeline.analysis.pivot</field>
+            <field name="model">jtbd.pipeline.analysis</field>
+            <field name="arch" type="xml">
+                <pivot string="JTBD Pipeline Analysis" disable_linking="True">
+                    <field name="job_category_id" type="row"/>
+                    <field name="stage_id" type="col"/>
+                    <field name="data_source_label" type="row"/>
+                    <field name="contact_progression_status" type="col"/>
+                    <field name="automation_source" type="row"/>
+                    <field name="expected_revenue" type="measure"/>
+                    <field name="job_clarity_score" type="measure"/>
+                    <field name="momentum_score" type="measure"/>
+                    <field name="signal_strength" type="measure"/>
+                    <field name="primary_outcome_progress" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- jtbd.pipeline.analysis Graph View -->
+         <record id="view_jtbd_pipeline_analysis_graph" model="ir.ui.view">
+             <field name="name">jtbd.pipeline.analysis.graph</field>
+             <field name="model">jtbd.pipeline.analysis</field>
+             <field name="arch" type="xml">
+                 <graph string="JTBD Pipeline Analysis" type="bar" stacked="False">
+                      <field name="stage_id" type="row"/>
+                      <field name="job_category_id" type="col"/>
+                      <field name="expected_revenue" type="measure"/>
+                 </graph>
+            </field>
+        </record>
+
+        <!-- jtbd.pipeline.analysis Search View -->
+         <record id="view_jtbd_pipeline_analysis_search" model="ir.ui.view">
+             <field name="name">jtbd.pipeline.analysis.search</field>
+             <field name="model">jtbd.pipeline.analysis</field>
+             <field name="arch" type="xml">
+                 <search string="Search JTBD Pipeline Analysis">
+                     <field name="lead_name" string="Opportunity/Lead"/>
+                     <field name="partner_id"/>
+                     <field name="user_id"/>
+                     <field name="team_id"/>
+                     <field name="job_category_id"/>
+                     <field name="job_quadrant"/>
+                     <field name="risk_level"/>
+                     <field name="trigger_window"/>
+                     <field name="data_source_label"/>
+                    <field name="contact_progression_status"/>
+                    <field name="automation_source"/>
+                    <filter string="Active Leads" name="active" domain="[('active', '=', True)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Salesperson" name="group_by_user" context="{'group_by': 'user_id'}"/>
+                        <filter string="Sales Team" name="group_by_team" context="{'group_by': 'team_id'}"/>
+                        <filter string="Stage" name="group_by_stage" context="{'group_by': 'stage_id'}"/>
+                        <filter string="Job Category" name="group_by_job_category" context="{'group_by': 'job_category_id'}"/>
+                        <filter string="Risk Level" name="group_by_risk" context="{'group_by': 'risk_level'}"/>
+                        <filter string="Decision Window" name="group_by_window" context="{'group_by': 'trigger_window'}"/>
+                        <filter string="Account Tier" name="group_by_tier" context="{'group_by': 'account_tier'}"/>
+                        <filter string="Primary Data Source" name="group_by_data_source" context="{'group_by': 'data_source_label'}"/>
+                        <filter string="Progression Status" name="group_by_progression" context="{'group_by': 'contact_progression_status'}"/>
+                        <filter string="Source Type" name="group_by_automation_source" context="{'group_by': 'automation_source'}"/>
+                    </group>
+                 </search>
+             </field>
+         </record>
+
+        <!-- jtbd.pipeline.analysis Action Window -->
+        <record id="action_jtbd_pipeline_analysis" model="ir.actions.act_window">
+            <field name="name">JTBD Pipeline Analysis</field>
+            <field name="res_model">jtbd.pipeline.analysis</field>
+            <field name="view_mode">pivot,graph,list</field> <!-- Pivot first -->
+            <field name="view_id" ref="view_jtbd_pipeline_analysis_pivot"/>
+            <field name="search_view_id" ref="view_jtbd_pipeline_analysis_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No JTBD analysis data found.
+              </p><p>
+                Data will appear here once opportunities are populated with JTBD information. This is a read-only view.
+              </p>
+            </field>
+        </record>
+
+        <!-- Menu Item for Analytics -->
+        <menuitem id="menu_jtbd_reporting"
+                  name="Reporting"
+                  parent="crm.crm_menu_root"
+                  sequence="95"/> <!-- Place after JTBD config -->
+
+        <menuitem id="menu_jtbd_pipeline_analysis"
+                  name="JTBD Pipeline Analysis"
+                  parent="menu_jtbd_reporting"
+                  action="action_jtbd_pipeline_analysis"
+                  sequence="10"/>
+
+    </data>
+</odoo>

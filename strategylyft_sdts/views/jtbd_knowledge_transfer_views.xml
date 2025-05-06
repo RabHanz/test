@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- jtbd.knowledge.transfer List View -->
+        <record id="view_jtbd_knowledge_transfer_list" model="ir.ui.view">
+            <field name="name">jtbd.knowledge.transfer.list</field>
+            <field name="model">jtbd.knowledge.transfer</field>
+            <field name="arch" type="xml">
+                <list string="Knowledge Transfers">
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="lead_id" optional="hide"/>
+                    <field name="source_team_id"/>
+                    <field name="target_team_id"/>
+                    <field name="transfer_status" widget="badge"/>
+                    <field name="completion_status" widget="progressbar"/>
+                    <field name="company_id" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- jtbd.knowledge.transfer Form View -->
+        <record id="view_jtbd_knowledge_transfer_form" model="ir.ui.view">
+            <field name="name">jtbd.knowledge.transfer.form</field>
+            <field name="model">jtbd.knowledge.transfer</field>
+            <field name="arch" type="xml">
+                <form string="Knowledge Transfer">
+                    <header>
+                       <!-- Add status buttons later if needed for workflow -->
+                       <field name="transfer_status" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
+                    <sheet>
+                         <h1><field name="name" placeholder="e.g., Handoff Project X to Delivery"/></h1>
+                         <group>
+                            <group string="Context">
+                                <field name="project_id" options="{'no_create': True}"/>
+                                <field name="lead_id" options="{'no_create': True}"/>
+                                 <field name="company_id" invisible="1"/>
+                            </group>
+                            <group string="Teams">
+                                <field name="source_team_id" options="{'no_create': True}"/>
+                                <field name="target_team_id" options="{'no_create': True}"/>
+                                <field name="completion_status" widget="percentpie"/>
+                            </group>
+                        </group>
+                         <notebook>
+                            <page string="Transfer Components">
+                                 <field name="component_ids">
+                                     <list editable="bottom">
+                                         <field name="sequence" widget="handle"/>
+                                         <field name="name" placeholder="e.g., Final Job Statement"/>
+                                         <field name="description" widget="text" placeholder="Link or key details..."/>
+                                         <field name="status" widget="selection"/>
+                                         <field name="verification_notes" placeholder="Verifier notes..."/>
+                                     </list>
+                                 </field>
+                             </page>
+                            <page string="Relevant Job Patterns">
+                                <field name="job_pattern_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                            </page>
+                             <page string="General Notes">
+                                <field name="notes"/>
+                             </page>
+                        </notebook>
+                    </sheet>
+                     <!-- Chatter -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- jtbd.knowledge.transfer Action Window -->
+        <record id="action_jtbd_knowledge_transfer" model="ir.actions.act_window">
+            <field name="name">Knowledge Transfers</field>
+            <field name="res_model">jtbd.knowledge.transfer</field>
+            <field name="view_mode">list,form</field>
+             <field name="help" type="html">
+               <p class="o_view_nocontent_smiling_face">
+                 Create a Knowledge Transfer Record
+               </p><p>
+                 Document the handoff of information and context between teams for a specific project or opportunity.
+               </p>
+             </field>
+         </record>
+
+        <!-- Menu Item -->
+         <menuitem id="menu_jtbd_knowledge_transfer"
+                   name="Knowledge Transfers"
+                   parent="menu_jtbd_config"
+                   action="action_jtbd_knowledge_transfer"
+                   sequence="90"/>
+
+    </data>
+</odoo>

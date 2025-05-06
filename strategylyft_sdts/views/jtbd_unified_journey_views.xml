@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- jtbd.unified.journey.event List View -->
+        <record id="view_jtbd_unified_journey_event_list" model="ir.ui.view">
+            <field name="name">jtbd.unified.journey.event.list</field>
+            <field name="model">jtbd.unified.journey.event</field>
+            <field name="arch" type="xml">
+                <list string="Unified Journey Events" create="false" edit="false">
+                    <field name="event_datetime"/>
+                    <field name="lead_id"/>
+                    <field name="partner_id" optional="hide"/>
+                    <field name="event_type"/>
+                    <field name="source_system"/>
+                    <field name="channel" optional="show"/>
+                    <field name="description"/>
+                    <field name="related_record_ref" optional="show"/>
+                    <field name="company_id" optional="hide" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- jtbd.unified.journey.event Form View -->
+        <record id="view_jtbd_unified_journey_event_form" model="ir.ui.view">
+            <field name="name">jtbd.unified.journey.event.form</field>
+            <field name="model">jtbd.unified.journey.event</field>
+            <field name="arch" type="xml">
+                <form string="Journey Event Log" create="false" edit="false">
+                    <sheet>
+                        <h2><field name="name"/></h2>
+                        <group>
+                            <group string="Context">
+                                <field name="lead_id"/>
+                                <field name="partner_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                            <group string="Event Details">
+                                <field name="event_datetime"/>
+                                <field name="event_type"/>
+                                <field name="source_system"/>
+                                <field name="channel"/>
+                            </group>
+                        </group>
+                        <group string="Description &amp; Links">
+                            <field name="description"/>
+                            <field name="related_record_ref"/>
+                            <field name="external_data_ref"/>
+                        </group>
+                         <group string="Raw Details (JSON)">
+                            <field name="details_json" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action Window -->
+        <record id="action_jtbd_unified_journey_event" model="ir.actions.act_window">
+            <field name="name">Unified Journey Events</field>
+            <field name="res_model">jtbd.unified.journey.event</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'search_default_group_by_lead': 1}</field>
+            <field name="help" type="html"><p class="o_view_nocontent_neutral_face">No journey events found.</p></field>
+        </record>
+
+        <!-- Menu Item (e.g., under Reporting or main JTBD menu) -->
+         <menuitem id="menu_jtbd_unified_journey"
+                   name="Unified Journey Log"
+                   parent="menu_jtbd_reporting"
+                   action="action_jtbd_unified_journey_event"
+                   sequence="20"/>
+
+    </data>
+</odoo>

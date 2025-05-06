@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Outbound Sequence Views -->
+        <record id="view_jtbd_outbound_sequence_list" model="ir.ui.view">
+            <field name="name">jtbd.outbound.sequence.list</field>
+            <field name="model">jtbd.outbound.sequence</field>
+            <field name="arch" type="xml">
+                <list string="Outbound Sequence Templates">
+                    <field name="name"/>
+                    <field name="description" optional="hide"/>
+                    <field name="target_account_tier" optional="show"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+        <record id="view_jtbd_outbound_sequence_form" model="ir.ui.view">
+            <field name="name">jtbd.outbound.sequence.form</field>
+            <field name="model">jtbd.outbound.sequence</field>
+            <field name="arch" type="xml">
+                <form string="Outbound Sequence Template">
+                    <sheet>
+                        <h1><field name="name"/></h1>
+                        <group>
+                            <group>
+                                <field name="description"/>
+                                <field name="target_job_category_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                                <field name="target_account_tier"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Sequence Steps">
+                                <field name="step_ids">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="channel"/>
+                                        <field name="delay_days"/>
+                                        <field name="template_subject"/>
+                                        <field name="template_body" widget="text"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_jtbd_outbound_sequence" model="ir.actions.act_window">
+            <field name="name">Outbound Sequence Templates</field>
+            <field name="res_model">jtbd.outbound.sequence</field>
+            <field name="view_mode">list,form</field>
+        </record>
+         <menuitem id="menu_jtbd_outbound_sequence" name="Outbound Sequence Templates" parent="menu_jtbd_config" action="action_jtbd_outbound_sequence" sequence="35" groups="jtbd_odoo_crm.group_jtbd_manager"/>
+
+        <!-- Outbound Engagement Views (Read-only list usually populated by integration) -->
+         <record id="view_jtbd_outbound_engagement_list" model="ir.ui.view">
+            <field name="name">jtbd.outbound.engagement.list</field>
+            <field name="model">jtbd.outbound.engagement</field>
+            <field name="arch" type="xml">
+                <list string="Outbound Engagements" create="false">
+                    <field name="engagement_datetime"/>
+                    <field name="lead_id"/>
+                    <field name="channel"/>
+                    <field name="summary"/>
+                    <field name="response_type" widget="badge"/>
+                    <field name="user_id" widget="many2one_avatar_user" optional="hide"/>
+                </list>
+            </field>
+        </record>
+        <record id="view_jtbd_outbound_engagement_form" model="ir.ui.view">
+            <field name="name">jtbd.outbound.engagement.form</field>
+            <field name="model">jtbd.outbound.engagement</field>
+            <field name="arch" type="xml">
+                <form string="Outbound Engagement Log" create="false" edit="false">
+                    <sheet>
+                         <group>
+                            <group>
+                                <field name="lead_id"/>
+                                <field name="channel"/>
+                                <field name="engagement_datetime"/>
+                            </group>
+                            <group>
+                                <field name="summary"/>
+                                <field name="response_type"/>
+                                <field name="user_id"/>
+                            </group>
+                         </group>
+                         <field name="response_details" placeholder="Details of the response..."/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_jtbd_outbound_engagement" model="ir.actions.act_window">
+            <field name="name">Outbound Engagements</field>
+            <field name="res_model">jtbd.outbound.engagement</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'search_default_group_by_lead': 1}</field>
+        </record>
+        <menuitem id="menu_jtbd_outbound_engagement" name="Outbound Engagements" parent="menu_jtbd_config" action="action_jtbd_outbound_engagement" sequence="37"/>
+
+    </data>
+</odoo>

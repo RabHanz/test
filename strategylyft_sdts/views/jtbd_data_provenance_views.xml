@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- jtbd.data.provenance List View -->
+        <record id="view_jtbd_data_provenance_list" model="ir.ui.view">
+            <field name="name">jtbd.data.provenance.list</field>
+            <field name="model">jtbd.data.provenance</field>
+            <field name="arch" type="xml">
+                <list string="Data Provenance Records" create="false"> <!-- Usually created programmatically -->
+                    <field name="name" string="Record Reference"/>
+                    <field name="data_source_label"/>
+                    <field name="source_confidence_score" widget="percentage" options="{'max_value': 1.0}"/>
+                    <field name="source_reference" optional="show"/>
+                    <field name="ingestion_datetime"/>
+                    <field name="integration_setting_id" optional="hide"/>
+                    <field name="record_write_date" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- jtbd.data.provenance Form View -->
+        <record id="view_jtbd_data_provenance_form" model="ir.ui.view">
+            <field name="name">jtbd.data.provenance.form</field>
+            <field name="model">jtbd.data.provenance</field>
+            <field name="arch" type="xml">
+                <form string="Data Provenance" create="false" edit="false"> <!-- Read-only view -->
+                    <sheet>
+                        <h2><field name="name"/></h2>
+                        <group>
+                            <group>
+                                <field name="res_model_id"/>
+                                <field name="res_id"/>
+                                <!-- <field name="source_record"/> -->
+                            </group>
+                            <group>
+                                <field name="ingestion_datetime"/>
+                                <field name="record_write_date"/>
+                            </group>
+                        </group>
+                         <group string="Source Details">
+                            <group>
+                                 <field name="data_source_label"/>
+                                 <field name="source_reference"/>
+                            </group>
+                            <group>
+                                <field name="source_confidence_score" widget="percentage" options="{'max_value': 1.0}"/>
+                                <field name="integration_setting_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action & Menu Item (Optional - For Admin/Debugging) -->
+        <record id="action_jtbd_data_provenance" model="ir.actions.act_window">
+            <field name="name">Data Provenance</field>
+            <field name="res_model">jtbd.data.provenance</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html"><p class="o_view_nocontent_neutral_face">No data provenance records found.</p></field>
+        </record>
+
+         <menuitem id="menu_jtbd_data_provenance"
+                   name="Data Provenance Logs"
+                   parent="menu_jtbd_config"
+                   action="action_jtbd_data_provenance"
+                   sequence="110"
+                   groups="base.group_system"/> <!-- System Admin only -->
+
+    </data>
+</odoo>
