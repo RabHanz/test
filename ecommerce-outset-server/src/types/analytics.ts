@@ -250,4 +250,27 @@ export interface UserInteraction {
   timestamp: string;
   contentId?: string;
   metadata?: Record<string, any>;
+}
+
+export interface AnalyticsData {
+  funnelMetrics: FunnelMetrics;
+  exitIntentMetrics: ExitIntentMetrics;
+  leadScoringMetrics: LeadScoringMetrics;
+  revenueMetrics: RevenueMetrics;
+}
+
+export interface AnalyticsState {
+  data: AnalyticsData | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export interface UseAnalyticsReturn {
+  funnelMetrics: FunnelMetrics | null;
+  exitIntentMetrics: ExitIntentMetrics | null;
+  leadScoringMetrics: LeadScoringMetrics | null;
+  revenueMetrics: RevenueMetrics | null;
+  loading: boolean;
+  error: string | null;
+  refresh: () => Promise<void>;
 } 
