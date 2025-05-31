@@ -1,0 +1,130 @@
+/* High Contrast Mode */
+.high-contrast {
+  --text-color: #ffffff;
+  --background-color: #000000;
+  --link-color: #ffff00;
+  --visited-color: #ff00ff;
+  --focus-color: #00ff00;
+  --border-color: #ffffff;
+}
+
+.high-contrast * {
+  color: var(--text-color) !important;
+  background-color: var(--background-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+.high-contrast a {
+  color: var(--link-color) !important;
+  text-decoration: underline !important;
+}
+
+.high-contrast a:visited {
+  color: var(--visited-color) !important;
+}
+
+.high-contrast *:focus {
+  outline: 2px solid var(--focus-color) !important;
+  outline-offset: 2px !important;
+}
+
+/* Reduced Motion */
+.reduced-motion * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Focus Styles */
+*:focus {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Keyboard Navigation */
+[role="button"],
+[role="tab"],
+[role="link"],
+button,
+a {
+  cursor: pointer;
+}
+
+[role="button"]:focus,
+[role="tab"]:focus,
+[role="link"]:focus,
+button:focus,
+a:focus {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+}
+
+/* ARIA Live Regions */
+[aria-live="polite"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Form Accessibility */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+}
+
+input:invalid,
+select:invalid,
+textarea:invalid {
+  border-color: #f44336;
+}
+
+/* Error Messages */
+.error-message {
+  color: #f44336;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Loading States */
+[aria-busy="true"] {
+  cursor: progress;
+}
+
+/* Disabled States */
+[aria-disabled="true"],
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+} 
